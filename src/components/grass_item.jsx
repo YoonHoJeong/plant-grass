@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "./grass_item.module.css";
 
-const GrassItem = ({ date, committed }) => (
+const GrassItem = ({ date, todo, updateGrass }) => (
   <li
-    className={`${styles.grass} ${committed && styles.committed}`}
+    className={`${styles.grass} ${todo.commits[date] && styles.committed}`}
     data-date={date}
+    onClick={() => {
+      updateGrass(date, todo);
+    }}
   ></li>
 );
 

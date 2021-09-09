@@ -26,7 +26,6 @@ function App() {
         "2021-09-03": true,
         "2021-09-04": true,
         "2021-09-06": true,
-        "2021-09-09": true,
       },
     },
   ]);
@@ -36,7 +35,7 @@ function App() {
     const today = new Date();
 
     const newDates = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 6; i >= 0; i--) {
       const date = new Date(today.getTime());
       date.setDate(date.getDate() - i);
       newDates.push(dateToString(date));
@@ -66,6 +65,31 @@ function App() {
     );
   };
 
+  const updateGrass = (grassDate, todo) => {
+    const today = dates[dates.length - 1];
+    if (grassDate === today) {
+      console.log("able", grassDate);
+      setTodos((currentState) =>
+        currentState.map((item) => {
+          if (item.id !== todo.id) {
+            return item;
+          } else {
+            const newTodo = {
+              ...todo,
+              commits: { ...todo.commits },
+            };
+            newTodo.commits[grassDate] = true;
+
+            console.log(newTodo);
+            return newTodo;
+          }
+        })
+      );
+    } else {
+      console.log("disable");
+    }
+  };
+
   return (
     <div>
       <header>Header</header>
@@ -77,6 +101,7 @@ function App() {
             todo={todo}
             dates={dates}
             deleteTodo={deleteTodo}
+            updateGrass={updateGrass}
           />
         ))}
       </ul>
