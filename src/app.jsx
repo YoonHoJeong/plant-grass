@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import GrassTab from "./components/grass_tab";
+import styles from "./app.module.css";
+import AddTodoForm from "./components/add_todo_form";
 
 function leftPad(value) {
   if (value >= 10) {
@@ -42,11 +44,31 @@ function App() {
     setDates(newDates);
   }, []);
 
+  const addTodo = (todoTitle) => {
+    console.log(todoTitle);
+    setTodos((currentState) => {
+      const newTodo = { title: todoTitle, commits: {} };
+      let id;
+      if (currentState.length > 0) {
+        id = currentState[currentState.length - 1].id + 1;
+      } else {
+        id = 1;
+      }
+      newTodo.id = id;
+
+      return [...currentState, newTodo];
+    });
+  };
+
   return (
     <div>
       <header>Header</header>
-
-      <GrassTab todo={todos[0]} dates={dates} />
+      <AddTodoForm addTodo={addTodo} />
+      <ul className={styles.grassList}>
+        {todos.map((todo) => (
+          <GrassTab key={todo.id} todo={todo} dates={dates} />
+        ))}
+      </ul>
     </div>
   );
 }
