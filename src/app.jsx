@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import TodoList from "./components/todoList";
-import Calendar from "./components/calendar";
-import TodoItem from "./components/todoItem";
+import GrassTab from "./components/grass_tab";
 
 function leftPad(value) {
   if (value >= 10) {
@@ -21,7 +19,7 @@ function App() {
   const [todos, setTodos] = useState([
     {
       id: 1,
-      title: "깃허브 커밋하기",
+      title: "github",
       commits: {
         "2021-09-03": true,
         "2021-09-04": true,
@@ -39,7 +37,7 @@ function App() {
     for (let i = 0; i < 7; i++) {
       const date = new Date(today.getTime());
       date.setDate(date.getDate() - i);
-      newDates.push(date);
+      newDates.push(dateToString(date));
     }
     setDates(newDates);
   }, []);
@@ -47,11 +45,8 @@ function App() {
   return (
     <div>
       <header>Header</header>
-      <ul>
-        {dates.map((date) => (
-          <li data-date={dateToString(date)}></li>
-        ))}
-      </ul>
+
+      <GrassTab todo={todos[0]} dates={dates} />
     </div>
   );
 }
