@@ -60,13 +60,24 @@ function App() {
     });
   };
 
+  const deleteTodo = (todo) => {
+    setTodos((currentState) =>
+      currentState.filter((item) => item.id !== todo.id)
+    );
+  };
+
   return (
     <div>
       <header>Header</header>
       <AddTodoForm addTodo={addTodo} />
       <ul className={styles.grassList}>
         {todos.map((todo) => (
-          <GrassTab key={todo.id} todo={todo} dates={dates} />
+          <GrassTab
+            key={todo.id}
+            todo={todo}
+            dates={dates}
+            deleteTodo={deleteTodo}
+          />
         ))}
       </ul>
     </div>
