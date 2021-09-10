@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const AddTodoForm = ({ addTodo }) => {
-  const [input, setInput] = useState(null);
+  const [input, setInput] = useState("");
   return (
     <>
       <input
