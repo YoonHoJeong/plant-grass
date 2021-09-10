@@ -4,5 +4,7 @@ Daily / Weekly Plan Todo List
 
 # Functions
 
-- [ ] To add Todo List
-- [ ] Grass Map
+- [x] append Todo List
+- [x] Grass Map
+- [x] add today commit
+- [ ] integrate commit msg
