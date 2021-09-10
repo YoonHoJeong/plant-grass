@@ -37,25 +37,21 @@ const TodoContextProvider = (props) => {
     );
   };
 
-  const todoCommit = (grassDate, todo) => {
+  const todoCommit = (todo) => {
+    // today일 때만 호출
     const today = getToday();
 
-    if (grassDate === today) {
-      console.log("able");
-      setTodos((currentState) =>
-        currentState.map((item) => {
-          if (item.id === todo.id) {
-            const newItem = { ...item };
-            newItem.commits[today] = true;
-            return newItem;
-          } else {
-            return item;
-          }
-        })
-      );
-    } else {
-      console.log("disable");
-    }
+    setTodos((currentState) =>
+      currentState.map((item) => {
+        if (item.id === todo.id) {
+          const newItem = { ...item };
+          newItem.commits[today] = true;
+          return newItem;
+        } else {
+          return item;
+        }
+      })
+    );
   };
 
   const value = { todos, addTodo, deleteTodo, todoCommit };

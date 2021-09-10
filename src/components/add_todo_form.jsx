@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { TodoContext } from "../contexts/TodoContext";
 
-const AddTodoForm = ({ addTodo }) => {
+const AddTodoForm = () => {
   const [input, setInput] = useState("");
+  const { addTodo } = useContext(TodoContext);
+
   return (
     <>
       <input

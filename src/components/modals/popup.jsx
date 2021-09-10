@@ -1,22 +1,25 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
-const Popup = ({ show }) => {
+const Popup = ({
+  show,
+  handleClose,
+  handleCommit,
+  popupData: { todo, date },
+}) => {
   return (
-    <Modal.Dialog>
+    <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal title</Modal.Title>
+        <Modal.Title>{todo.title}</Modal.Title>
+        <Modal.Title>{date}</Modal.Title>
       </Modal.Header>
-
-      <Modal.Body>
-        <p>Modal body text goes here.</p>
-      </Modal.Body>
-
+      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary">Close</Button>
-        <Button variant="primary">Save changes</Button>
+        <Button variant="primary" onClick={handleCommit}>
+          Commit
+        </Button>
       </Modal.Footer>
-    </Modal.Dialog>
+    </Modal>
   );
 };
 
