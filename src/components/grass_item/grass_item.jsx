@@ -1,7 +1,14 @@
 import React from "react";
+import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import styles from "./grass_item.module.css";
 
 const GrassItem = ({ date, todo, handleClickGrass }) => {
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {todo.commits[date] ? todo.commits[date].title : date}
+    </Tooltip>
+  );
+
   return (
     <li
       className={`${styles.grass} ${todo.commits[date] && styles.committed}`}
@@ -9,7 +16,15 @@ const GrassItem = ({ date, todo, handleClickGrass }) => {
       onClick={() => {
         handleClickGrass(todo, date);
       }}
-    ></li>
+    >
+      <OverlayTrigger
+        placement="top"
+        delay={{ show: 250, hide: 400 }}
+        overlay={renderTooltip}
+      >
+        <button className={styles.grassBtn}></button>
+      </OverlayTrigger>
+    </li>
   );
 };
 

@@ -13,3 +13,10 @@
 .grass.committed {
   background-color: lightgreen;
 }
+
+.grassBtn {
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+}
