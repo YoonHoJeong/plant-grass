@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { DateContext, getToday } from "./DateContext";
+import { createContext, useState } from "react";
+import { getToday } from "./DateContext";
 
 export const TodoContext = createContext();
 
@@ -9,9 +9,9 @@ const TodoContextProvider = (props) => {
       id: 1,
       title: "github",
       commits: {
-        "2021-09-03": true,
-        "2021-09-04": true,
-        "2021-09-06": true,
+        "2021-09-03": { title: "add form1", msg: "fix error1" },
+        "2021-09-04": { title: "add form2", msg: "fix error2" },
+        "2021-09-06": { title: "add form3", msg: "fix error3" },
       },
     },
   ]);
@@ -37,7 +37,7 @@ const TodoContextProvider = (props) => {
     );
   };
 
-  const todoCommit = (todo) => {
+  const todoCommit = (todo, commitMsg) => {
     // today일 때만 호출
     const today = getToday();
 
@@ -45,7 +45,7 @@ const TodoContextProvider = (props) => {
       currentState.map((item) => {
         if (item.id === todo.id) {
           const newItem = { ...item };
-          newItem.commits[today] = true;
+          newItem.commits[today] = commitMsg;
           return newItem;
         } else {
           return item;
