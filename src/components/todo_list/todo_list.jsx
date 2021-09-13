@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import TodoItem from "../todo_item/todo_item";
 import { TodoContext } from "../../contexts/TodoContext";
 import styles from "./todo_list.module.css";
 import Popup from "../modals/popup";
 import { getToday } from "../../contexts/DateContext";
+import useLoader from "../../useLoader";
 
 const TodoList = () => {
-  const { todos, todoCommit } = useContext(TodoContext);
+  const { todos, todoCommit, loader } = useContext(TodoContext);
 
   const [popupShow, setPopupShow] = useState(false);
   const [popupData, setPopupData] = useState({
@@ -30,17 +31,22 @@ const TodoList = () => {
       console.log("disable");
     }
   };
+
   return (
     <>
-      <ul className={styles.todoList}>
-        {todos.map((todo) => (
-          <TodoItem
-            key={todo.title}
-            todo={todo}
-            handleClickGrass={handleClickGrass}
-          />
-        ))}
-      </ul>
+      {loader ? (
+        loader
+      ) : (
+        <ul className={styles.todoList}>
+          {todos.map((todo) => (
+            <TodoItem
+              key={todo.title}
+              todo={todo}
+              handleClickGrass={handleClickGrass}
+            />
+          ))}
+        </ul>
+      )}
       {popupShow && (
         <Popup
           show={popupShow}

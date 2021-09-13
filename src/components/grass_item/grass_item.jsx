@@ -1,5 +1,5 @@
 import React from "react";
-import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import styles from "./grass_item.module.css";
 
 const GrassItem = ({ date, todo, handleClickGrass }) => {

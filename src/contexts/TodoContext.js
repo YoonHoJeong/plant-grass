@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import StoreManager from "../services/storeManager";
+import useLoader from "../useLoader";
 import { getToday } from "./DateContext";
 
 const storeManager = new StoreManager();
@@ -7,36 +8,23 @@ const storeManager = new StoreManager();
 export const TodoContext = createContext();
 
 const TodoContextProvider = (props) => {
-  const [todos, setTodos] = useState([
-    {
-      title: "github",
-      commits: {
-        "2021-09-03": { title: "add form1", msg: "fix error1" },
-        "2021-09-04": { title: "add form2", msg: "fix error2" },
-        "2021-09-06": { title: "add form3", msg: "fix error3" },
-      },
-    },
-  ]);
+  const [todos, setTodos] = useState();
+  const [loader, showLoader, hideLoader] = useLoader(); //initialize useLoader hook
 
   useEffect(() => {
-    storeManager.getAllTodos();
+    syncTodos();
   }, []);
+
+  const syncTodos = async () => {
+    const loadTodos = await storeManager.loadTodos();
+    setTodos(loadTodos);
+    hideLoader();
+    console.log("syncTodos done");
+  };
 
   const addTodo = async (todoTitle) => {
     const todo = await storeManager.addTodo(todoTitle);
     setTodos([...todos, todo]);
-    // setTodos((currentState) => {
-    //   const newTodo = { title: todoTitle, commits: {} };
-    //   let id;
-    //   if (currentState.length > 0) {
-    //     id = currentState[currentState.length - 1].id + 1;
-    //   } else {
-    //     id = 1;
-    //   }
-    //   newTodo.id = id;
-
-    //   return [...currentState, newTodo];
-    // });
   };
 
   const deleteTodo = (todo) => {
@@ -64,7 +52,7 @@ const TodoContextProvider = (props) => {
     );
   };
 
-  const value = { todos, addTodo, deleteTodo, todoCommit };
+  const value = { todos, addTodo, deleteTodo, todoCommit, loader };
 
   return (
     <TodoContext.Provider value={value}>{props.children}</TodoContext.Provider>

@@ -14,13 +14,16 @@ export default class StoreManager {
     console.log("storeManager", "constructor");
   }
 
-  async getAllTodos() {
+  async loadTodos() {
+    console.log("StoreManager", "getAllTodos");
     const q = query(collection(fireStore, "todos"), where("title", "!=", null));
     const querySnapshot = await getDocs(q);
+    const data = [];
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+      data.push(doc.data());
     });
+
+    return data;
   }
 
   async addTodo(todoTitle) {
