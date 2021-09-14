@@ -52,4 +52,7 @@ export default class StoreManager {
       return null;
     }
   }
+  async commit(todo, commit) {
+    console.log(todo, commit);
+  }
 }

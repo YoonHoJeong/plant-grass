@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import StoreManager from "../services/storeManager";
-import useLoader from "../useLoader";
+import useLoader from "../hooks/useLoader";
 import { getToday } from "./DateContext";
 
 const storeManager = new StoreManager();
@@ -19,7 +19,6 @@ const TodoContextProvider = (props) => {
     const loadTodos = await storeManager.loadTodos();
     setTodos(loadTodos);
     hideLoader();
-    console.log("syncTodos done");
   };
 
   const addTodo = async (todoTitle) => {
@@ -33,23 +32,8 @@ const TodoContextProvider = (props) => {
     );
   };
 
-  const todoCommit = (todo, commitMsg) => {
-    storeManager.addTodo();
-
-    // today일 때만 호출
-    const today = getToday();
-
-    setTodos((currentState) =>
-      currentState.map((item) => {
-        if (item.id === todo.id) {
-          const newItem = { ...item };
-          newItem.commits[today] = commitMsg;
-          return newItem;
-        } else {
-          return item;
-        }
-      })
-    );
+  const todoCommit = (todo, commit) => {
+    storeManager.commit(todo, commit);
   };
 
   const value = { todos, addTodo, deleteTodo, todoCommit, loader };

@@ -1,15 +1,13 @@
 import React from "react";
 import { Modal, Button, FormControl, InputGroup } from "react-bootstrap";
-import { usePopupForm } from "../../usePopupForm";
 
 const Popup = ({
   show,
   handleClose,
+  handleChange,
   handleCommit,
   popupData: { todo, date },
 }) => {
-  const [commitMsg, handleChange] = usePopupForm();
-
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -38,7 +36,7 @@ const Popup = ({
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={() => handleCommit(commitMsg)}>
+        <Button variant="primary" onClick={handleCommit}>
           {date} Commit
         </Button>
       </Modal.Footer>
