@@ -3,7 +3,7 @@ import Popup from "../components/popup.jsx/popup";
 import { getToday } from "../contexts/DateContext";
 import { TodoContext } from "../contexts/TodoContext";
 
-export const usePopup = (todo, date = getToday()) => {
+export const usePopup = (todo) => {
   const { todoCommit } = useContext(TodoContext);
 
   const [commit, setCommit] = useState({ title: "", content: "" });
@@ -11,7 +11,7 @@ export const usePopup = (todo, date = getToday()) => {
 
   const handleClose = () => setShow(false);
   const handleCommit = () => {
-    todoCommit(todo, { [date]: commit });
+    todoCommit(todo, commit);
     setShow(false);
   };
 
@@ -28,7 +28,7 @@ export const usePopup = (todo, date = getToday()) => {
       handleClose={handleClose}
       handleChange={handleChange}
       handleCommit={handleCommit}
-      popupData={{ todo, today: date }}
+      popupData={{ todo, today: getToday() }}
     />,
     () => {
       setShow(true);
