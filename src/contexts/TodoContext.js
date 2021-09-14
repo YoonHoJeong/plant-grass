@@ -32,8 +32,10 @@ const TodoContextProvider = (props) => {
     );
   };
 
-  const todoCommit = (todo, commit) => {
-    storeManager.commit(todo, commit);
+  const todoCommit = async (todo, commit) => {
+    showLoader();
+    await storeManager.commit(todo, commit);
+    hideLoader();
   };
 
   const value = { todos, addTodo, deleteTodo, todoCommit, loader };

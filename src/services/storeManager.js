@@ -7,7 +7,9 @@ import {
   where,
   collection,
   query,
+  runTransaction,
 } from "firebase/firestore";
+import { getToday } from "../contexts/DateContext";
 
 export default class StoreManager {
   constructor() {
@@ -52,7 +54,29 @@ export default class StoreManager {
       return null;
     }
   }
+
   async commit(todo, commit) {
+    console.log("storeManager", "commit");
     console.log(todo, commit);
+
+    const todoRef = doc(fireStore, "todos", todo.title);
+    try {
+      await runTransaction(fireStore, async (transaction) => {
+        const doc = await transaction.get(todoRef);
+        if (!doc.exists()) {
+          throw "Document does not exist!";
+        }
+
+        const currentTodo = doc.data();
+        const currentCommit = currentTodo.commit;
+        transaction.update(todoRef, {
+          ...currentTodo,
+          commits: { ...currentCommit, [getToday()]: commit },
+        });
+      });
+      console.log("Transaction successfully committed!");
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
   }
 }
