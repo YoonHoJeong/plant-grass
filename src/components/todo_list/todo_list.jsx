@@ -15,7 +15,7 @@ const TodoList = () => {
       ) : (
         <ul className={styles.todoList}>
           {todos.map((todo) => (
-            <TodoItem key={todo.title} todo={todo} />
+            <TodoItem key={todo.title} todoTitle={todo.title} />
           ))}
         </ul>
       )}

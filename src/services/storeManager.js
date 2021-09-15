@@ -69,10 +69,13 @@ export default class StoreManager {
 
         const currentTodo = doc.data();
         const currentCommit = currentTodo.commit;
-        transaction.update(todoRef, {
-          ...currentTodo,
-          commits: { ...currentCommit, [getToday()]: commit },
-        });
+        const newCommits = { ...currentCommit, [getToday()]: commit };
+        console.log("newCommit", newCommits);
+
+        // transaction.update(todoRef, {
+        //   ...currentTodo,
+        //   commits: { ...currentCommit, [getToday()]: commit },
+        // });
       });
       console.log("Transaction successfully committed!");
     } catch (e) {

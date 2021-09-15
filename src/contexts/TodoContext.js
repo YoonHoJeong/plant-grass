@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import StoreManager from "../services/storeManager";
 import useLoader from "../hooks/useLoader";
 import { getToday } from "./DateContext";
+import { collection, onSnapshot, query, where } from "@firebase/firestore";
 
 const storeManager = new StoreManager();
 

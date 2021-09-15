@@ -1,39 +1,63 @@
-import React, { useContext } from "react";
+import { doc, getDoc, onSnapshot } from "@firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
 import { DateContext } from "../../contexts/DateContext";
 import { TodoContext } from "../../contexts/TodoContext";
-import { usePopup } from "../../hooks/usePopupForm";
+import { fireStore } from "../../services/firebase";
 import GrassItem from "../grass_item/grass_item";
 import styles from "./todo_item.module.css";
 
-const TodoItem = ({ todo, handleClickGrass }) => {
+const TodoItem = ({ todoTitle }) => {
+  const [loading, setLoading] = useState(true);
   const { dates } = useContext(DateContext);
   const { deleteTodo } = useContext(TodoContext);
+  const [todo, setTodo] = useState();
 
-  const [popup] = usePopup(todo);
+  useEffect(() => {
+    initTodo();
+
+    const unsub = onSnapshot(doc(fireStore, "todos", todoTitle), (doc) => {
+      setLoading(true);
+      console.log("data: ", doc.data());
+      setTodo(doc.data());
+      setLoading(false);
+    });
+  }, []);
+
+  const initTodo = async () => {
+    const docRef = doc(fireStore, "todos", todoTitle);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log("initTodo", docSnap.data());
+      setTodo(docSnap.data());
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+    // setLoading(false);
+  };
 
   return (
     <>
-      <li>
-        <div className={styles.todoName}>{todo.title}</div>
-        <button
-          onClick={() => {
-            deleteTodo(todo);
-          }}
-        >
-          delete
-        </button>
-        <ul className={styles.GrassMap}>
-          {dates.map((date) => (
-            <GrassItem
-              key={date}
-              date={date}
-              todo={todo}
-              handleClickGrass={handleClickGrass}
-            />
-          ))}
-        </ul>
-      </li>
-      {popup}
+      {loading ? (
+        <div>loading</div>
+      ) : (
+        <li>
+          <div className={styles.todoName}>{todo.title}</div>
+          <button
+            onClick={() => {
+              deleteTodo(todo);
+            }}
+          >
+            delete
+          </button>
+          <ul className={styles.GrassMap}>
+            {dates.map((date) => (
+              <GrassItem key={date} date={date} todo={todo} />
+            ))}
+          </ul>
+        </li>
+      )}
     </>
   );
 };
