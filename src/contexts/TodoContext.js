@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import StoreManager from "../services/storeManager";
 import useLoader from "../hooks/useLoader";
+import { fireStore } from "../services/firebase";
+import { deleteDoc, doc } from "@firebase/firestore";
 
 const storeManager = new StoreManager();
 
@@ -25,10 +27,12 @@ const TodoContextProvider = (props) => {
     setTodos([...todos, todo]);
   };
 
-  const deleteTodo = (todo) => {
-    setTodos((currentState) =>
-      currentState.filter((item) => item.id !== todo.id)
-    );
+  const deleteTodo = async (todo) => {
+    // setTodos((currentState) =>
+    //   currentState.filter((item) => item.id !== todo.id)
+    // );
+
+    await deleteDoc(doc(fireStore, "todos", todo.title));
   };
 
   const todoCommit = async (todo, commit) => {
