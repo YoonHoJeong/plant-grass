@@ -21,6 +21,10 @@ const TodoItem = ({ todoTitle }) => {
       setTodo(doc.data());
       setLoading(false);
     });
+
+    return () => {
+      unsub();
+    };
   }, []);
 
   const initTodo = async () => {
@@ -28,7 +32,7 @@ const TodoItem = ({ todoTitle }) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("initTodo", docSnap.data());
+      // console.log("initTodo", docSnap.data());
       setTodo(docSnap.data());
     } else {
       // doc.data() will be undefined in this case

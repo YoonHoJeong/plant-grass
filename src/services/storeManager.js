@@ -39,25 +39,18 @@ export default class StoreManager {
         },
         { merge: true }
       );
-      const docRef = doc(fireStore, "todos", todoTitle);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        console.log("doc exist", docSnap.data());
-        return docSnap.data();
-      } else {
-        console.log("doc doesn't exist");
-        return null;
-      }
     } catch (e) {
       console.error("Error adding document: ", e);
       return null;
     }
   }
 
+  async deleteTodo(todo) {
+    console.log("deleteTodo", todo);
+  }
+
   async commit(todo, commit) {
     console.log("storeManager", "commit");
-    console.log(todo, commit);
 
     const todoRef = doc(fireStore, "todos", todo.title);
     try {
@@ -68,14 +61,13 @@ export default class StoreManager {
         }
 
         const currentTodo = doc.data();
-        const currentCommit = currentTodo.commit;
-        const newCommits = { ...currentCommit, [getToday()]: commit };
-        console.log("newCommit", newCommits);
+        const currentCommit = currentTodo.commits;
+        console.log("current Commit", currentCommit);
 
-        // transaction.update(todoRef, {
-        //   ...currentTodo,
-        //   commits: { ...currentCommit, [getToday()]: commit },
-        // });
+        transaction.update(todoRef, {
+          ...currentTodo,
+          commits: { ...currentCommit, [getToday()]: commit },
+        });
       });
       console.log("Transaction successfully committed!");
     } catch (e) {
