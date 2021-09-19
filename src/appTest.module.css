@@ -1,0 +1,9 @@
+/* app */
+.appContainer {
+  display: flex;
+}
+
+.sideBar {
+  width: 80px;
+  background-color: aquamarine;
+}
