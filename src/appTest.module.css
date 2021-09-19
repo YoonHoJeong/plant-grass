@@ -1,9 +1,130 @@
+:root {
+  --black: #212429;
+  --lightgray: #acb5bd;
+  --activeBlue: #4263eb;
+}
+
 /* app */
 .appContainer {
   display: flex;
+  background-color: #e5e5e5;
+
+  width: 100vw;
+  height: 100vh;
 }
 
 .sideBar {
   width: 80px;
-  background-color: aquamarine;
+  background-color: white;
+  border-right: 1px solid #dde2e5;
+}
+
+.appMain {
+  flex: 1;
+}
+
+/* main page */
+
+.pageContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  width: 100%;
+  height: 235px;
+  background-color: white;
+
+  padding: 50px;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+}
+.profileImg {
+  width: 112px;
+  height: 112px;
+
+  border: 2px solid black;
+  border-radius: 50%;
+
+  margin-right: 23px;
+}
+
+.profileInfo {
+  display: flex;
+
+  align-items: center;
+}
+
+.profileDetail {
+}
+
+.profileName {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+.profileStats {
+  display: flex;
+
+  font-size: 12px;
+  color: var(--lightgray);
+}
+
+.stat:not(:first-child) {
+  margin-left: 55px;
+}
+
+.count {
+  font-size: 16px;
+  color: #495057;
+}
+
+.btn {
+  height: 48px;
+  font-size: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: none;
+
+  border: none;
+  border-radius: 8px;
+}
+
+.profileMore {
+  display: flex;
+}
+
+.moreBtn {
+  width: 48px;
+  background-color: #dde2e5;
+  margin-right: 8px;
+}
+
+.editProfileBtn {
+  width: 182px;
+
+  background-color: white;
+  border: 1px solid var(--lightgray);
+}
+
+/* tab navigator */
+.tabNavigator {
+  display: flex;
+}
+
+.tablink {
+  color: var(--lightgray);
+}
+
+.tablink.active {
+  color: var(--black);
+  border-bottom: 5px solid var(--activeBlue);
 }
