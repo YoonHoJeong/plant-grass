@@ -1,13 +1,34 @@
+/* root */
 :root {
   --black: #212429;
-  --lightgray: #acb5bd;
+  --lightgray1: #acb5bd;
+  --lightgray2: #dde2e5;
+  --lightgray3: #f2f2f2;
   --activeBlue: #4263eb;
+  --green: #51cf66;
+  --pink: #f784ad;
+
+  --md-btn-width: 182px;
+
+  --lg-font-size: 28px;
+  --md-font-size: 16px;
+  --sm-font-size: 12px;
+}
+.lgFont {
+  font-size: var(--lg-font-size);
+}
+
+.indexText {
+  margin-bottom: 4px;
+
+  font-size: var(--sm-font-size);
+  color: var(--lightgray2);
 }
 
 /* app */
 .appContainer {
   display: flex;
-  background-color: #e5e5e5;
+  background-color: var(--lightgray3);
 
   width: 100vw;
   height: 100vh;
@@ -16,9 +37,24 @@
 .sideBar {
   width: 80px;
   background-color: white;
-  border-right: 1px solid #dde2e5;
+  border-right: 1px solid var(--lightgray2);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.sideBar > li {
+  width: 100%;
+  height: 80px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sideBar > li:first-child {
+  border-bottom: 1px solid var(--lightgray2);
+}
 .appMain {
   flex: 1;
 }
@@ -31,11 +67,16 @@
 }
 
 .header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   width: 100%;
   height: 235px;
   background-color: white;
 
   padding: 50px;
+  padding-bottom: 0;
 }
 
 .profile {
@@ -65,14 +106,15 @@
 }
 
 .profileName {
-  font-size: 28px;
   margin-bottom: 12px;
 }
+
 .profileStats {
   display: flex;
 
   font-size: 12px;
-  color: var(--lightgray);
+  color: var(--lightgray1);
+  color: var(--lightgray2);
 }
 
 .stat:not(:first-child) {
@@ -104,7 +146,8 @@
 
 .moreBtn {
   width: 48px;
-  background-color: #dde2e5;
+  background-color: var(--lightgray2);
+  color: white;
   margin-right: 8px;
 }
 
@@ -112,19 +155,143 @@
   width: 182px;
 
   background-color: white;
-  border: 1px solid var(--lightgray);
+  border: 1px solid var(--lightgray1);
+  border: 1px solid var(--lightgray2);
 }
 
 /* tab navigator */
 .tabNavigator {
   display: flex;
+  padding-left: 10px;
 }
 
 .tablink {
-  color: var(--lightgray);
+  font-size: 16px;
+  color: var(--lightgray1);
+  color: var(--lightgray2);
+  padding-bottom: 13px;
+}
+
+.tablink:not(:first-child) {
+  margin-left: 62px;
 }
 
 .tablink.active {
   color: var(--black);
   border-bottom: 5px solid var(--activeBlue);
+}
+
+/* dashboard */
+.dashboard {
+  position: relative;
+
+  padding: 30px;
+}
+
+.addActionBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  width: var(--md-btn-width);
+  background-color: var(--green);
+
+  color: white;
+}
+
+.todoCards {
+  display: grid;
+}
+
+.todoCard {
+  position: relative;
+
+  width: 420px;
+  height: 353px;
+  padding: 28px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: #ffffff;
+  box-shadow: 0px 2px 4px rgba(33, 36, 41, 0.05);
+  border-radius: 16px;
+}
+
+.todoTitle {
+  display: flex;
+  align-items: flex-end;
+}
+
+.editBtn {
+  font-size: var(--md-font-size);
+  color: var(--lightgray1);
+  color: var(--lightgray2);
+  margin-left: 8px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  background-color: var(--pink);
+  width: 34px;
+  height: 34px;
+}
+
+.records {
+  width: 100%;
+  flex: 1;
+  margin: 16px 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bestRecord {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bestRecordStat {
+  width: 106px;
+  height: 56px;
+
+  background-color: white;
+  border: 1px solid var(--lightgray1);
+
+  border-radius: 8px;
+
+  font-size: 21px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grassContainer {
+  display: grid;
+
+  grid-template-columns: repeat(7, 28px);
+  grid-template-rows: repeat(4, 28px);
+
+  row-gap: 7px;
+  column-gap: 7px;
+}
+
+.grassContainer > li {
+  background-color: white;
+  border: 1px solid var(--lightgray2);
+  border-radius: 4px;
+}
+
+.commitBtn {
+  width: var(--md-btn-width);
+  background-color: var(--activeBlue);
+
+  color: white;
 }

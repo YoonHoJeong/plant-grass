@@ -23,16 +23,20 @@ const TodoContextProvider = (props) => {
   };
 
   const addTodo = async (todoTitle) => {
+    showLoader();
     const todo = await storeManager.addTodo(todoTitle);
     setTodos([...todos, todo]);
+    hideLoader();
   };
 
   const deleteTodo = async (todo) => {
     // setTodos((currentState) =>
     //   currentState.filter((item) => item.id !== todo.id)
     // );
+    showLoader();
 
     await deleteDoc(doc(fireStore, "todos", todo.title));
+    hideLoader();
   };
 
   const todoCommit = async (todo, commit) => {

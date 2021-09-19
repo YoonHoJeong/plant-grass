@@ -49,8 +49,10 @@ const TodoItem = ({ todoTitle }) => {
         <li>
           <div className={styles.todoName}>{todo.title}</div>
           <button
-            onClick={() => {
+            onClick={async () => {
+              setLoading(true);
               deleteTodo(todo);
+              setLoading(false);
             }}
           >
             delete
