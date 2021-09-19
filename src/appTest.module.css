@@ -1,30 +1,3 @@
-/* root */
-:root {
-  --black: #212429;
-  --lightgray1: #acb5bd;
-  --lightgray2: #dde2e5;
-  --lightgray3: #f2f2f2;
-  --activeBlue: #4263eb;
-  --green: #51cf66;
-  --pink: #f784ad;
-
-  --md-btn-width: 182px;
-
-  --lg-font-size: 28px;
-  --md-font-size: 16px;
-  --sm-font-size: 12px;
-}
-.lgFont {
-  font-size: var(--lg-font-size);
-}
-
-.indexText {
-  margin-bottom: 4px;
-
-  font-size: var(--sm-font-size);
-  color: var(--lightgray2);
-}
-
 /* app */
 .appContainer {
   display: flex;
@@ -124,20 +97,6 @@
 .count {
   font-size: 16px;
   color: #495057;
-}
-
-.btn {
-  height: 48px;
-  font-size: 16px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: none;
-
-  border: none;
-  border-radius: 8px;
 }
 
 .profileMore {
