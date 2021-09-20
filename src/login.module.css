@@ -1,3 +1,5 @@
+@import "./common.module.css";
+
 .container {
   width: 960px;
   height: 640px;
@@ -7,13 +9,22 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  box-shadow: 0px 0px 0px rgba(63, 63, 68, 0.05),
+    0px 1px 3px rgba(63, 63, 68, 0.15);
+  border-radius: 4px;
+
+  padding: 186px 300px;
 }
 
 .containerTitle {
-  align-self: center;
+  align-self: flex-start;
 }
 
 .bg {
+  width: 100vw;
+  height: 100vh;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,6 +45,8 @@
 
   padding: 13px 16px;
   background-color: white;
+
+  margin-top: 16px;
 }
 
 .notification {
@@ -49,4 +62,8 @@
   background-color: var(--activeBlue);
 
   color: white;
+
+  border-radius: 4px;
+
+  margin-top: 15px;
 }
