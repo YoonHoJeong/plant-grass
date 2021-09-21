@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import Popup from "../components/popup.jsx/popup";
+import Popup from "../components/popup";
 import { getToday } from "../contexts/DateContext";
 import { TodoContext } from "../contexts/TodoContext";
 

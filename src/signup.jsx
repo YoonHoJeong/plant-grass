@@ -3,6 +3,8 @@ import signupCss from "./login.module.css";
 import commonCss from "./common.module.css";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
+import { useAuth } from "./hooks/useAuth";
 
 let styles = {};
 
@@ -18,7 +20,9 @@ const SignupSchema = Yup.object().shape({
 
 Object.assign(styles, signupCss, commonCss);
 
-const Signup = ({ userAuth }) => {
+const Signup = () => {
+  const { signup } = useAuth();
+
   return (
     <div className={styles.bg}>
       <div className={styles.container}>
@@ -33,7 +37,7 @@ const Signup = ({ userAuth }) => {
           validationSchema={SignupSchema}
           onSubmit={async (values, { setSubmitting }) => {
             const { email, password } = values;
-            const user = await userAuth.signup(email, password);
+            const user = await signup(email, password);
             console.log(user);
             setSubmitting(false);
           }}
@@ -57,7 +61,7 @@ const Signup = ({ userAuth }) => {
               <ErrorMessage name="password" component="div" />
               <div className={`${styles.indexText} ${styles.notification}`}>
                 <span>ALREADY HAS ACCOUNT?</span>
-                <a href="">LOGIN</a>
+                <Link to="/login">LOGIN</Link>
               </div>
               <button
                 className={`${styles.btn} ${styles.loginBtn}`}

@@ -7,27 +7,6 @@
   height: 100vh;
 }
 
-.sideBar {
-  width: 80px;
-  background-color: white;
-  border-right: 1px solid var(--lightgray2);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.sideBar > li {
-  width: 100%;
-  height: 80px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.sideBar > li:first-child {
-  border-bottom: 1px solid var(--lightgray2);
-}
 .appMain {
   flex: 1;
 }
