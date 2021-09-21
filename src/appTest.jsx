@@ -12,11 +12,11 @@ import Signup from "./signup";
 let styles = {};
 Object.assign(styles, appCss, commonCss);
 
-const AppTest = (props) => {
+const AppTest = ({ userAuth }) => {
   const [user, setUser] = useState(null);
 
   return user === null ? (
-    <Signup />
+    <Signup userAuth={userAuth} />
   ) : (
     <div className={styles.appContainer}>
       <ul className={styles.sideBar}>

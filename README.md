@@ -9,3 +9,5 @@ Daily / Weekly Plan Todo List
 - [x] add today commit
 - [ ] integrate commit msg
 - [ ] user Auth
+- [ ] social communication
+- [ ] select grass color
