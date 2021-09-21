@@ -7,6 +7,7 @@ import Login from "./login";
 
 import appCss from "./appTest.module.css";
 import commonCss from "./common.module.css";
+import Signup from "./signup";
 
 let styles = {};
 Object.assign(styles, appCss, commonCss);
@@ -15,7 +16,7 @@ const AppTest = (props) => {
   const [user, setUser] = useState(null);
 
   return user === null ? (
-    <Login />
+    <Signup />
   ) : (
     <div className={styles.appContainer}>
       <ul className={styles.sideBar}>
