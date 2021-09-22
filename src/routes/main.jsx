@@ -1,7 +1,5 @@
 import React from "react";
 
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import appCss from "../appTest.module.css";
 import commonCss from "../common.module.css";
@@ -22,7 +20,7 @@ const Main = (props) => (
                 className={styles.profileImg}
                 style={{ backgroundImage: `url("logo512.png")` }}
               />
-              <div clansName={styles.profileDetail}>
+              <div className={styles.profileDetail}>
                 <h2 className={`${styles.profileName} ${styles.lgFont}`}>
                   Jeong YunHo
                 </h2>

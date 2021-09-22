@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ProvideAuth, useAuth } from "./hooks/useAuth";
 import {
   BrowserRouter as Router,

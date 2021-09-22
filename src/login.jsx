@@ -1,7 +1,7 @@
 import React from "react";
 import loginCss from "./login.module.css";
 import commonCss from "./common.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
@@ -10,7 +10,14 @@ let styles = {};
 Object.assign(styles, loginCss, commonCss);
 
 const Login = (props) => {
-  const { signin } = useAuth();
+  const auth = useAuth();
+  const history = useHistory();
+  const goToMain = (userId) => {
+    history.push({
+      pathname: "/",
+      // state: { id: userId },
+    });
+  };
 
   return (
     <div className={styles.bg}>
@@ -26,9 +33,10 @@ const Login = (props) => {
           validate={() => {}}
           onSubmit={async (values, { setSubmitting }) => {
             const { email, password } = values;
-            const user = await signin(email, password);
+            const user = await auth.signin(email, password);
             console.log("login", user);
             setSubmitting(false);
+            goToMain(user);
           }}
         >
           {({ isSubmitting }) => (
