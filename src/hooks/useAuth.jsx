@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -28,14 +29,14 @@ function useProvideAuth() {
       );
       const user = userCredential.user;
       setUser(user);
-      return user;
+      return userCredential;
     } catch (e) {
       console.log(e);
       setUser(null);
       return null;
     }
   };
-  const signup = async (email, password) => {
+  const signup = async (email, password, username) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -54,12 +55,16 @@ function useProvideAuth() {
   };
 
   const signout = () => {
-    //   return firebase
-    //     .auth()
-    //     .signOut()
-    //     .then(() => {
-    //       setUser(false);
-    //     });
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("success to signout");
+        setUser(null);
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log(error);
+      });
   };
   const sendPasswordResetEmail = (email) => {
     //   return firebase
@@ -84,7 +89,7 @@ function useProvideAuth() {
   // ... latest auth object.
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user !== null) {
         setUser(user);
       } else {
         setUser(false);

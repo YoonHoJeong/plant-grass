@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import loginCss from "./login.module.css";
 import commonCss from "./common.module.css";
 import { Link, useHistory } from "react-router-dom";
@@ -12,12 +12,23 @@ Object.assign(styles, loginCss, commonCss);
 const Login = (props) => {
   const auth = useAuth();
   const history = useHistory();
-  const goToMain = (userId) => {
+  const goToMain = () => {
     history.push({
       pathname: "/",
       // state: { id: userId },
     });
   };
+
+  useEffect(() => {
+    console.log("login.jsx mount");
+    const user = auth.currentUser;
+    console.log(user);
+
+    if (user !== null && user !== undefined) {
+      console.log(user);
+      goToMain();
+    }
+  });
 
   return (
     <div className={styles.bg}>
@@ -36,7 +47,7 @@ const Login = (props) => {
             const user = await auth.signin(email, password);
             console.log("login", user);
             setSubmitting(false);
-            goToMain(user);
+            goToMain();
           }}
         >
           {({ isSubmitting }) => (
