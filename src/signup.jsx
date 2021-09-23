@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import signupCss from "./login.module.css";
 import commonCss from "./common.module.css";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
+import useLoader from "./hooks/useLoader";
 
 let styles = {};
 
@@ -22,8 +23,20 @@ Object.assign(styles, signupCss, commonCss);
 
 const Signup = () => {
   const { signup } = useAuth();
+  const history = useHistory();
+  let [loader, showLoader, hideLoader] = useLoader();
 
-  return (
+  useEffect(() => {
+    hideLoader();
+
+    return () => {
+      showLoader();
+    };
+  }, []);
+
+  return loader ? (
+    loader
+  ) : (
     <div className={styles.bg}>
       <div className={styles.container}>
         <div className={`${styles.containerTitle}`}>
@@ -33,12 +46,20 @@ const Signup = () => {
           </div>
         </div>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ email: "", password: "", displayName: "" }}
           validationSchema={SignupSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            const { email, password } = values;
-            const user = await signup(email, password);
-            console.log(user);
+            const { email, password, displayName } = values;
+            const uid = await signup(email, password, displayName);
+
+            showLoader();
+            history.push({
+              pathname: "/login",
+              state: {
+                id: uid,
+              },
+            });
+
             setSubmitting(false);
           }}
         >
@@ -46,11 +67,26 @@ const Signup = () => {
             <Form>
               <Field
                 className={styles.textInput}
+                type="text"
+                name="displayName"
+                placeholder="Username"
+              />
+              <ErrorMessage
+                className={styles.errorMsg}
+                name="displayName"
+                component="div"
+              />
+              <Field
+                className={styles.textInput}
                 type="email"
                 name="email"
                 placeholder="Email Address"
               />
-              <ErrorMessage name="email" component="div" />
+              <ErrorMessage
+                className={styles.errorMsg}
+                name="email"
+                component="div"
+              />
 
               <Field
                 className={styles.textInput}
@@ -58,7 +94,12 @@ const Signup = () => {
                 name="password"
                 placeholder="Password"
               />
-              <ErrorMessage name="password" component="div" />
+              <ErrorMessage
+                className={styles.errorMsg}
+                name="password"
+                component="div"
+              />
+
               <div className={`${styles.indexText} ${styles.notification}`}>
                 <span>ALREADY HAS ACCOUNT?</span>
                 <Link to="/login">LOGIN</Link>

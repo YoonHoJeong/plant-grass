@@ -5,10 +5,16 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import useLoader from "./hooks/useLoader";
+import * as Yup from "yup";
 
 let styles = {};
 
 Object.assign(styles, loginCss, commonCss);
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required!"),
+  password: Yup.string().required("Required!"),
+});
 
 const Login = (props) => {
   let auth = useAuth();
@@ -26,12 +32,18 @@ const Login = (props) => {
     console.log("login.jsx mount");
 
     const user = auth.user;
+    console.log(user);
 
     if (user !== null && user !== undefined) {
+      showLoader();
       goToMain();
     } else {
       hideLoader();
     }
+
+    return () => {
+      showLoader();
+    };
   }, []);
 
   return loader ? (
@@ -47,7 +59,7 @@ const Login = (props) => {
         </div>
         <Formik
           initialValues={{ email: "", password: "" }}
-          validate={() => {}}
+          validationSchema={LoginSchema}
           onSubmit={async (values, { setSubmitting }) => {
             const { email, password } = values;
             const user = await auth.signin(email, password);

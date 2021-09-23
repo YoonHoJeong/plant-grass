@@ -16,6 +16,10 @@ const Main = (props) => {
 
   useEffect(() => {
     hideLoader();
+
+    return () => {
+      showLoader();
+    };
   }, []);
   return loader ? (
     loader
@@ -33,7 +37,7 @@ const Main = (props) => {
                 />
                 <div className={styles.profileDetail}>
                   <h2 className={`${styles.profileName} ${styles.lgFont}`}>
-                    Jeong YunHo
+                    {auth.user.displayName || "unnamed"}
                   </h2>
                   <ul className={styles.profileStats}>
                     <li className={styles.stat}>

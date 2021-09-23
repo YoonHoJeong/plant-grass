@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -43,9 +44,15 @@ function useProvideAuth() {
         email,
         password
       );
+      await updateProfile(auth.currentUser, {
+        displayName: username,
+      });
+
       const user = userCredential.user;
+      console.log("signup user: ", user);
       setUser(user);
-      return user;
+
+      return user.uid;
     } catch (e) {
       const errorCode = e.code;
       const errorMessage = e.message;
