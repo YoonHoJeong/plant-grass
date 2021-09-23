@@ -4,13 +4,14 @@ import commonCss from "./common.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import useLoader from "./hooks/useLoader";
 
 let styles = {};
 
 Object.assign(styles, loginCss, commonCss);
 
 const Login = (props) => {
-  const auth = useAuth();
+  let auth = useAuth();
   const history = useHistory();
   const goToMain = () => {
     history.push({
@@ -19,18 +20,23 @@ const Login = (props) => {
     });
   };
 
+  let [loader, showLoader, hideLoader] = useLoader();
+
   useEffect(() => {
     console.log("login.jsx mount");
-    const user = auth.currentUser;
-    console.log(user);
+
+    const user = auth.user;
 
     if (user !== null && user !== undefined) {
-      console.log(user);
       goToMain();
+    } else {
+      hideLoader();
     }
-  });
+  }, []);
 
-  return (
+  return loader ? (
+    loader
+  ) : (
     <div className={styles.bg}>
       <div className={styles.container}>
         <div className={`${styles.containerTitle}`}>

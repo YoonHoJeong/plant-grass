@@ -5,19 +5,21 @@ import appCss from "../appTest.module.css";
 import commonCss from "../common.module.css";
 import SideBar from "../components/sideBar/sideBar";
 import { useAuth } from "../hooks/useAuth";
+import useLoader from "../hooks/useLoader";
 
 let styles = {};
 Object.assign(styles, appCss, commonCss);
 
 const Main = (props) => {
-  const auth = useAuth();
-  const user = auth.currentUser;
+  let auth = useAuth();
+  let [loader, showLoader, hideLoader] = useLoader();
 
   useEffect(() => {
-    if (user !== null) {
-    }
+    hideLoader();
   }, []);
-  return (
+  return loader ? (
+    loader
+  ) : (
     <div className={styles.appContainer}>
       <SideBar />
       <main className={styles.appMain}>
@@ -53,6 +55,7 @@ const Main = (props) => {
                 <button
                   className={`${styles.btn} ${styles.editProfileBtn}`}
                   onClick={() => {
+                    showLoader();
                     auth.signout();
                   }}
                 >
