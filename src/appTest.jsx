@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ProvideAuth, useAuth } from "./hooks/useAuth";
 import {
   BrowserRouter as Router,
@@ -14,7 +14,6 @@ import Signup from "./signup";
 
 function PrivateRoute({ children, ...rest }) {
   let auth = useAuth();
-  console.log("private route", auth);
 
   return (
     <Route

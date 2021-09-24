@@ -16,16 +16,11 @@ export function ProvideAuth({ children }) {
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
 
-const writeUserDataIntoDB = async (uid, ...userData) => {
-  console.log(uid, userData);
-
+const writeUserDataIntoDB = async (uid, { ...userData }) => {
   const db = getDatabase();
   try {
-    await set(
-      ref(db, "users/" + uid, {
-        ...userData,
-      })
-    );
+    console.log(userData);
+    await set(ref(db, "users/" + uid), userData);
     console.log("writeUserDataIntoDB success");
   } catch (e) {
     console.log("writeUserDataIntoDB failed");
@@ -70,9 +65,9 @@ function useProvideAuth() {
         displayName: username,
       });
 
-      writeUserDataIntoDB(user.uid, username);
+      writeUserDataIntoDB(user.uid, { username });
 
-      console.log("signup user: ", user);
+      // TODO: delete user id when write user data into db fails
       setUser(user);
 
       return user.uid;
