@@ -1,3 +1,4 @@
+import { getDatabase, set, ref } from "@firebase/database";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -15,6 +16,23 @@ export function ProvideAuth({ children }) {
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
 
+const writeUserDataIntoDB = async (uid, ...userData) => {
+  console.log(uid, userData);
+
+  const db = getDatabase();
+  try {
+    await set(
+      ref(db, "users/" + uid, {
+        ...userData,
+      })
+    );
+    console.log("writeUserDataIntoDB success");
+  } catch (e) {
+    console.log("writeUserDataIntoDB failed");
+    console.log(e);
+  }
+};
+
 function useProvideAuth() {
   const [user, setUser] = useState(null);
   // Wrap any Firebase methods we want to use making sure ...
@@ -30,10 +48,12 @@ function useProvideAuth() {
       );
       const user = userCredential.user;
       setUser(user);
+
       return userCredential;
     } catch (e) {
       console.log(e);
       setUser(null);
+
       return null;
     }
   };
@@ -44,11 +64,14 @@ function useProvideAuth() {
         email,
         password
       );
+      const user = userCredential.user;
+
       await updateProfile(auth.currentUser, {
         displayName: username,
       });
 
-      const user = userCredential.user;
+      writeUserDataIntoDB(user.uid, username);
+
       console.log("signup user: ", user);
       setUser(user);
 

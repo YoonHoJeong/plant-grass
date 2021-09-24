@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import appCss from "../appTest.module.css";
 import commonCss from "../common.module.css";
 import SideBar from "../components/sideBar/sideBar";
 import { useAuth } from "../hooks/useAuth";
 import useLoader from "../hooks/useLoader";
+import MainHeader from "../components/main_header";
+import { getDatabase, ref, onValue, set } from "firebase/database";
 
 let styles = {};
 Object.assign(styles, appCss, commonCss);
@@ -13,9 +14,19 @@ Object.assign(styles, appCss, commonCss);
 const Main = (props) => {
   let auth = useAuth();
   let [loader, showLoader, hideLoader] = useLoader();
-
+  const [todos, setTodos] = useState(null);
+  const getTodosById = async (uid) => {
+    const db = getDatabase();
+    const userRef = ref(db, `users/${uid}`);
+    onValue(userRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log(data);
+    });
+  };
   useEffect(() => {
     hideLoader();
+
+    getTodosById(auth.user.uid);
 
     return () => {
       showLoader();
@@ -28,53 +39,7 @@ const Main = (props) => {
       <SideBar />
       <main className={styles.appMain}>
         <div className={styles.pageContainer}>
-          <header className={styles.header}>
-            <section className={styles.profile}>
-              <div className={styles.profileInfo}>
-                <div
-                  className={styles.profileImg}
-                  style={{ backgroundImage: `url("logo512.png")` }}
-                />
-                <div className={styles.profileDetail}>
-                  <h2 className={`${styles.profileName} ${styles.lgFont}`}>
-                    {auth.user.displayName || "unnamed"}
-                  </h2>
-                  <ul className={styles.profileStats}>
-                    <li className={styles.stat}>
-                      <span className={styles.count}>2</span> Todos
-                    </li>
-                    <li className={styles.stat}>
-                      <span className={styles.count}>33</span> TOTAL COMMITS
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className={styles.profileMore}>
-                <button className={`${styles.btn} ${styles.moreBtn}`}>
-                  <MoreHorizIcon />
-                </button>
-                <button className={`${styles.btn} ${styles.editProfileBtn}`}>
-                  Edit Profile
-                </button>
-                <button
-                  className={`${styles.btn} ${styles.editProfileBtn}`}
-                  onClick={() => {
-                    showLoader();
-                    auth.signout();
-                  }}
-                >
-                  logout
-                </button>
-              </div>
-            </section>
-            <ul className={styles.tabNavigator}>
-              <li className={`${styles.tablink} ${styles.active}`}>
-                Dashboard
-              </li>
-              <li className={styles.tablink}>Todo</li>
-              <li className={styles.tablink}>Settings</li>
-            </ul>
-          </header>
+          <MainHeader auth={auth} />
           <div className={styles.dashboard}>
             <button className={`${styles.btn} ${styles.addActionBtn}`}>
               Add Action
@@ -101,10 +66,7 @@ const Main = (props) => {
                       <li></li>
                       <li></li>
                       <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
+
                       <li></li>
                     </ul>
                   </div>

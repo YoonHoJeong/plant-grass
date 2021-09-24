@@ -19,10 +19,10 @@ const LoginSchema = Yup.object().shape({
 const Login = (props) => {
   let auth = useAuth();
   const history = useHistory();
-  const goToMain = () => {
+  const goToMain = (uid) => {
     history.push({
       pathname: "/",
-      // state: { id: userId },
+      state: { id: uid },
     });
   };
 
@@ -36,7 +36,7 @@ const Login = (props) => {
 
     if (user !== null && user !== undefined) {
       showLoader();
-      goToMain();
+      goToMain(user.uid);
     } else {
       hideLoader();
     }
