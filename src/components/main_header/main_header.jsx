@@ -6,7 +6,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 let styles = {};
 Object.assign(styles, headerCss, commonCss);
 
-const MainHeader = ({ auth, todos }) => {
+const MainHeader = ({ auth, todos, commits }) => {
   return (
     <header className={styles.header}>
       <section className={styles.profile}>
