@@ -6,7 +6,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 let styles = {};
 Object.assign(styles, headerCss, commonCss);
 
-const MainHeader = ({ auth }) => {
+const MainHeader = ({ auth, todos }) => {
   return (
     <header className={styles.header}>
       <section className={styles.profile}>
@@ -21,7 +21,7 @@ const MainHeader = ({ auth }) => {
             </h2>
             <ul className={styles.profileStats}>
               <li className={styles.stat}>
-                <span className={styles.count}>2</span> Todos
+                <span className={styles.count}>{todos.length}</span> Todos
               </li>
               <li className={styles.stat}>
                 <span className={styles.count}>33</span> TOTAL COMMITS

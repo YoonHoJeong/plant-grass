@@ -1,7 +1,6 @@
 import { fireStore } from "../services/firebase";
 import {
   doc,
-  getDoc,
   setDoc,
   getDocs,
   where,

@@ -29,10 +29,7 @@ const Login = (props) => {
   let [loader, showLoader, hideLoader] = useLoader();
 
   useEffect(() => {
-    console.log("login.jsx mount");
-
     const user = auth.user;
-    console.log(user);
 
     if (user !== null && user !== undefined) {
       showLoader();

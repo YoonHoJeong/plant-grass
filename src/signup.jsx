@@ -32,7 +32,7 @@ const Signup = () => {
     return () => {
       showLoader();
     };
-  }, []);
+  }, [hideLoader, showLoader]);
 
   return loader ? (
     loader
