@@ -6,7 +6,15 @@ import SideBar from "../components/sideBar/sideBar";
 import { useAuth } from "../hooks/useAuth";
 import useLoader from "../hooks/useLoader";
 import MainHeader from "../components/main_header";
-import { getDatabase, ref, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  push,
+  child,
+  update,
+  set,
+} from "firebase/database";
 import Dashboard from "../components/dashboard";
 
 let styles = {};
@@ -35,6 +43,29 @@ const Main = (props) => {
       setTodos(todosDB);
     });
   };
+
+  const addTodo = (todoData) => {
+    // update todoRef
+    // update userRef
+    const {
+      user: { uid },
+    } = auth;
+
+    const db = getDatabase();
+    const userTodoListRef = ref(db, `users/${uid}/todos`);
+
+    const newTodoKey = push(child(ref(db), "posts")).key;
+    const newUserTodoRef = push(userTodoListRef);
+
+    // push todo key into user/uid/todos
+    set(newUserTodoRef, newTodoKey);
+
+    // update todos Ref
+    const updates = {};
+    updates[`/todos/` + newTodoKey] = todoData;
+    update(ref(db), updates);
+  };
+
   useEffect(() => {
     hideLoader();
 

@@ -7,15 +7,17 @@ let styles = {};
 
 Object.assign(styles, dashboardCss, commonCss);
 
-const Dashboard = ({ todos }) => (
-  <div className={styles.dashboard}>
-    <button className={`${styles.btn} ${styles.addActionBtn}`}>
-      Add Action
-    </button>
-    <ul className={styles.todoCards}>
-      <TodoCard />
-    </ul>
-  </div>
-);
+const Dashboard = ({ todos }) => {
+  return (
+    <div className={styles.dashboard}>
+      <button className={`${styles.btn} ${styles.addActionBtn}`}>
+        Add Action
+      </button>
+      <ul className={styles.todoCards}>
+        <TodoCard />
+      </ul>
+    </div>
+  );
+};
 
 export default Dashboard;
