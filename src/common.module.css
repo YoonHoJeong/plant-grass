@@ -39,3 +39,61 @@
   border: none;
   border-radius: 8px;
 }
+
+/* form styles */
+.popupBG {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: lightgray;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popupBG.hide {
+  visibility: hidden;
+}
+
+.popupForm {
+  width: 500px;
+  height: 500px;
+  background-color: aquamarine;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.textInput {
+  width: 360px;
+  height: 50px;
+
+  border: 1px solid var(--lightgray2);
+  border-radius: 4px;
+
+  padding: 13px 16px;
+  background-color: white;
+
+  margin-top: 16px;
+}
+
+.errorMsg {
+  font-size: 12px;
+  color: red;
+}
+
+.loginBtn {
+  width: 360px;
+  background-color: var(--activeBlue);
+
+  color: white;
+
+  border-radius: 4px;
+
+  margin-top: 15px;
+}
