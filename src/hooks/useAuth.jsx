@@ -16,23 +16,42 @@ export function ProvideAuth({ children }) {
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
 
-const writeUserDataIntoDB = async (uid, { ...userData }) => {
+const createUser = async (uid, userData) => {
   const db = getDatabase();
   try {
-    console.log(userData);
-    await set(ref(db, "users/" + uid), userData);
-    console.log("writeUserDataIntoDB success");
+    await set(ref(db, "users/" + uid), { uid, ...userData });
+    console.log("createUser success");
   } catch (e) {
-    console.log("writeUserDataIntoDB failed");
+    console.log("createUser failed");
     console.log(e);
   }
 };
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
   const auth = getAuth();
+
+  const handleUser = (rawUser) => {
+    if (rawUser !== null) {
+      const user = formatUser(rawUser);
+
+      createUser(user.uid, user);
+      setUser(user);
+
+      setLoading(false);
+
+      return user;
+    } else {
+      setLoading(false);
+      setUser(false);
+
+      return false;
+    }
+  };
 
   const signin = async (email, password) => {
     try {
@@ -42,12 +61,13 @@ function useProvideAuth() {
         password
       );
       const user = userCredential.user;
-      setUser(user);
+      handleUser(user);
 
       return userCredential;
     } catch (e) {
       console.log(e);
-      setUser(null);
+
+      handleUser(null);
 
       return null;
     }
@@ -65,12 +85,10 @@ function useProvideAuth() {
         displayName: username,
       });
 
-      writeUserDataIntoDB(user.uid, { username });
-
       // TODO: delete user id when write user data into db fails
-      setUser(user);
+      handleUser(user);
 
-      return user.uid;
+      return user;
     } catch (e) {
       const errorCode = e.code;
       const errorMessage = e.message;
@@ -83,8 +101,7 @@ function useProvideAuth() {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        console.log("success to signout");
-        setUser(null);
+        handleUser(false);
       })
       .catch((error) => {
         // An error happened.
@@ -113,20 +130,20 @@ function useProvideAuth() {
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
   useEffect(() => {
+    console.log("auth changed");
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user !== null) {
-        setUser(user);
-      } else {
-        setUser(false);
-      }
+      console.log("onAuthStateChanged");
+      handleUser(user);
     });
+
     // Cleanup subscription on unmount
     return () => unsubscribe();
-  }, []);
+  }, [auth]);
 
   // Return the user object and auth methods
   return {
     user,
+    loading,
     signin,
     signup,
     signout,
@@ -134,6 +151,16 @@ function useProvideAuth() {
     confirmPasswordReset,
   };
 }
+
+const formatUser = (user) => {
+  return {
+    uid: user.uid,
+    email: user.email,
+    name: user.displayName,
+    // provider: user.providerData[0].providerId,
+    // photoUrl: user.photoURL,
+  };
+};
 
 export function useAuth() {
   return useContext(authContext);

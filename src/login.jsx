@@ -41,7 +41,7 @@ const Login = (props) => {
     return () => {
       showLoader();
     };
-  }, []);
+  }, [auth]);
 
   return loader ? (
     loader

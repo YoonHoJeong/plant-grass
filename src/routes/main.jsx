@@ -4,7 +4,6 @@ import appCss from "../appTest.module.css";
 import commonCss from "../common.module.css";
 import SideBar from "../components/sideBar/sideBar";
 import { useAuth } from "../hooks/useAuth";
-import useLoader from "../hooks/useLoader";
 import MainHeader from "../components/main_header";
 import {
   getDatabase,
@@ -16,14 +15,21 @@ import {
   set,
 } from "firebase/database";
 import Dashboard from "../components/dashboard";
+import { useHistory } from "react-router";
 
 let styles = {};
 Object.assign(styles, appCss, commonCss);
 
 const Main = (props) => {
-  let auth = useAuth();
-  let [loader, showLoader, hideLoader] = useLoader();
+  const historyState = useHistory().state;
+  const auth = useAuth();
+  const [userId, setUserId] = useState(historyState && historyState.id);
   const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    getTodosById(auth.user.uid);
+    console.log(auth);
+  }, [auth]);
 
   const getTodosById = async (uid) => {
     const db = getDatabase();
@@ -66,18 +72,7 @@ const Main = (props) => {
     update(ref(db), updates);
   };
 
-  useEffect(() => {
-    hideLoader();
-
-    getTodosById(auth.user.uid);
-
-    return () => {
-      showLoader();
-    };
-  }, []);
-  return loader ? (
-    loader
-  ) : (
+  return (
     <div className={styles.appContainer}>
       <SideBar />
       <main className={styles.appMain}>

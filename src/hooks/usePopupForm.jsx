@@ -1,17 +1,14 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Popup from "../components/popup";
 import { getToday } from "../contexts/DateContext";
-import { TodoContext } from "../contexts/TodoContext";
 
 export const usePopup = (todo) => {
-  const { todoCommit } = useContext(TodoContext);
-
   const [commit, setCommit] = useState({ title: "", content: "" });
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleCommit = () => {
-    todoCommit(todo, commit);
+    console.log("fake commit");
     setShow(false);
   };
 

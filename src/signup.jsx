@@ -55,9 +55,6 @@ const Signup = () => {
             showLoader();
             history.push({
               pathname: "/login",
-              state: {
-                id: uid,
-              },
             });
 
             setSubmitting(false);
