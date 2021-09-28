@@ -60,7 +60,6 @@ const Login = (props) => {
           onSubmit={async (values, { setSubmitting }) => {
             const { email, password } = values;
             const user = await auth.signin(email, password);
-            console.log("login", user);
             setSubmitting(false);
             goToMain();
           }}

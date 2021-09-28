@@ -21,9 +21,9 @@ let styles = {};
 Object.assign(styles, appCss, commonCss);
 
 const Main = (props) => {
-  const historyState = useHistory().state;
+  // const historyState = useHistory().state;
   const auth = useAuth();
-  const [userId, setUserId] = useState(historyState && historyState.id);
+  // const [userId, setUserId] = useState(historyState && historyState.id);
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
