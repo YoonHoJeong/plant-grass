@@ -20,16 +20,19 @@ import { useHistory } from "react-router";
 let styles = {};
 Object.assign(styles, appCss, commonCss);
 
-const Main = (props) => {
-  // const historyState = useHistory().state;
+const Main = ({ showActionPopup }) => {
+  const history = useHistory();
   const auth = useAuth();
-  // const [userId, setUserId] = useState(historyState && historyState.id);
+  const [userId, setUserId] = useState(history.state && history.state.id);
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     getTodosById(auth.user.uid);
-    console.log(auth);
-  }, [auth]);
+
+    if (auth === null || auth === undefined) {
+      history.push("/login");
+    }
+  }, []);
 
   const getTodosById = async (uid) => {
     const db = getDatabase();
@@ -78,7 +81,7 @@ const Main = (props) => {
       <main className={styles.appMain}>
         <div className={styles.pageContainer}>
           <MainHeader auth={auth} todos={todos} />
-          <Dashboard todos={todos} />
+          <Dashboard todos={todos} showActionPopup={showActionPopup} />
         </div>
       </main>
     </div>

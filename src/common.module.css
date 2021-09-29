@@ -48,11 +48,11 @@
   width: 100vw;
   height: 100vh;
 
-  background-color: lightgray;
-
   display: flex;
   align-items: center;
   justify-content: center;
+
+  z-index: 999;
 }
 .popupBG.hide {
   visibility: hidden;
