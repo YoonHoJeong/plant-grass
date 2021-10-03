@@ -6,6 +6,11 @@ import { useAuth } from "./hooks/useAuth";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import useLoader from "./hooks/useLoader";
 import * as Yup from "yup";
+import {
+  browserLocalPersistence,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from "@firebase/auth";
 
 let styles = {};
 
@@ -17,7 +22,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = (props) => {
-  let auth = useAuth();
+  const auth = useAuth();
   const history = useHistory();
   const goToMain = () => {
     const {
@@ -36,7 +41,6 @@ const Login = (props) => {
     const user = auth.user;
 
     if (user !== null && user !== undefined) {
-      console.log(user);
       goToMain(user.uid);
     }
     hideLoader();
@@ -58,7 +62,8 @@ const Login = (props) => {
           validationSchema={LoginSchema}
           onSubmit={async (values, { setSubmitting }) => {
             const { email, password } = values;
-            const user = await auth.signin(email, password);
+            await auth.signin(email, password);
+
             setSubmitting(false);
             goToMain();
           }}

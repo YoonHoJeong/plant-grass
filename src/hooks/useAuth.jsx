@@ -36,7 +36,7 @@ function useProvideAuth() {
   const auth = getAuth();
 
   const handleUser = (rawUser) => {
-    if (rawUser !== null) {
+    if (rawUser) {
       const user = formatUser(rawUser);
 
       createUser(user.uid, user);
@@ -130,9 +130,7 @@ function useProvideAuth() {
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
   useEffect(() => {
-    console.log("auth changed");
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("onAuthStateChanged");
       handleUser(user);
     });
 

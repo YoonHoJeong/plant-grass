@@ -12,28 +12,7 @@ import Main from "./routes/main";
 
 import Signup from "./signup";
 import useActionPopup from "./hooks/useActionPopup";
-
-function PrivateRoute({ children, ...rest }) {
-  let auth = useAuth();
-
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        auth.user ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
-  );
-}
+import PrivateRoute from "./PrivateRoute";
 
 const AppTest = () => {
   const [popup, showActionPopup, hideActionPopup] = useActionPopup();

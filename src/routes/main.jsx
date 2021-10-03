@@ -27,6 +27,8 @@ const Main = ({ showActionPopup }) => {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
+    console.log("main, mount");
+    console.log(auth);
     getTodosById(auth.user.uid);
 
     if (auth === null || auth === undefined) {
