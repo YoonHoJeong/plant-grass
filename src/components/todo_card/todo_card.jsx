@@ -6,13 +6,13 @@ let styles = {};
 
 Object.assign(styles, todoCardCss, commonCss);
 
-const TodoCard = (props) => (
+const TodoCard = ({ todo }) => (
   <li className={styles.todoCard}>
     <button className={`${styles.btn} ${styles.closeBtn}`}></button>
     <section>
       <header className={styles.indexText}>TODO NAME</header>
       <div className={styles.todoTitle}>
-        <h2 className={styles.lgFont}>Github</h2>
+        <h2 className={styles.lgFont}>{todo.title}</h2>
         <a className={styles.editBtn}>Edit</a>
       </div>
     </section>
@@ -23,12 +23,6 @@ const TodoCard = (props) => (
           <li></li>
           <li></li>
           <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-
           <li></li>
         </ul>
       </div>

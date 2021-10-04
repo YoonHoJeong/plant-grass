@@ -13,6 +13,7 @@ const TAG = "DBManger";
 
 export class DBManager {
   constructor(firebaseApp) {
+    console.log("dbManager mount");
     this.app = firebaseApp;
     this.db = getDatabase(firebaseApp);
     this.auth = getAuth(firebaseApp);
@@ -26,7 +27,7 @@ export class DBManager {
 
         // user 상태가 변할 때마다, todos를 변경, 추적
         const todoRef = ref(this.db, "user-todos/" + this.user.uid);
-        onValue(todoRef, (snapshot) => {
+        const unscribe = onValue(todoRef, (snapshot) => {
           const todos = snapshot.toJSON();
           this.todos = todos;
         });
@@ -64,6 +65,7 @@ export class DBManager {
   };
 
   getTodos() {
+    console.log(TAG, "getTodos");
     // 로그인 되어있을 경우 exception handling
     return this.user ? this.todos : {};
   }

@@ -33,7 +33,7 @@ const Login = (props) => {
       goToMain();
     }
     hideLoader();
-  }, [auth.user, goToMain, hideLoader]);
+  }, []);
 
   return loader ? (
     loader

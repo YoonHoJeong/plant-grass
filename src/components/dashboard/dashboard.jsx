@@ -7,7 +7,7 @@ let styles = {};
 
 Object.assign(styles, dashboardCss, commonCss);
 
-const Dashboard = ({ showActionPopup, hideActionPopup }) => {
+const Dashboard = ({ todos, showActionPopup }) => {
   const handleClickAction = (e) => {
     showActionPopup();
   };
@@ -21,7 +21,9 @@ const Dashboard = ({ showActionPopup, hideActionPopup }) => {
         Add Action
       </button>
       <ul className={styles.todoCards}>
-        <TodoCard />
+        {Object.keys(todos).map((key) => {
+          return <TodoCard todo={todos[key]} />;
+        })}
       </ul>
     </div>
   );

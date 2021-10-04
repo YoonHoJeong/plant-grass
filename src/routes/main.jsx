@@ -5,10 +5,10 @@ import commonCss from "../common.module.css";
 import SideBar from "../components/sideBar/sideBar";
 import { useAuth } from "../hooks/useAuth";
 import MainHeader from "../components/main_header";
-import { getDatabase, ref, onValue } from "firebase/database";
 import Dashboard from "../components/dashboard";
 import { useHistory } from "react-router";
 import useActionPopup from "../hooks/useActionPopup";
+import dbManager from "../services/dbManager";
 
 let styles = {};
 Object.assign(styles, appCss, commonCss);
@@ -25,28 +25,12 @@ const Main = () => {
       history.push("/login");
     } else {
       // auth.user is not null
-      getTodosById(auth.user.uid);
     }
   }, [auth, history]);
 
-  const getTodosById = async (uid) => {
-    const db = getDatabase();
-    const userRef = ref(db, `users/${uid}/todos`);
-    onValue(userRef, (snapshot) => {
-      // users/uid/todos : array[todo_id]
-      const todoIds = snapshot.val() || [];
-      console.log("todoIds", todoIds);
-      const todosDB = [];
-      todoIds.forEach((tid) => {
-        onValue(ref(db, "todos/" + tid), (snapshot) => {
-          todosDB.push(snapshot.val());
-        });
-      });
-      console.log("todosDB", todosDB);
-
-      setTodos(todosDB);
-    });
-  };
+  useEffect(() => {
+    setTodos(dbManager.getTodos());
+  }, [dbManager.todos]);
 
   return (
     <>

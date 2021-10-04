@@ -24,7 +24,10 @@ const MainHeader = ({ todos }) => {
             </h2>
             <ul className={styles.profileStats}>
               <li className={styles.stat}>
-                <span className={styles.count}>{todos.length}</span> Todos
+                <span className={styles.count}>
+                  {Object.keys(todos).length}
+                </span>
+                Todos
               </li>
               <li className={styles.stat}>
                 <span className={styles.count}>33</span> TOTAL COMMITS
