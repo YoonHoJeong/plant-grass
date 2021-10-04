@@ -6,11 +6,6 @@ import { useAuth } from "./hooks/useAuth";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import useLoader from "./hooks/useLoader";
 import * as Yup from "yup";
-import {
-  browserLocalPersistence,
-  setPersistence,
-  signInWithEmailAndPassword,
-} from "@firebase/auth";
 
 let styles = {};
 

@@ -2,11 +2,14 @@ import React from "react";
 import headerCss from "./main_header.module.css";
 import commonCss from "../../common.module.css";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useAuth } from "../../hooks/useAuth";
 
 let styles = {};
 Object.assign(styles, headerCss, commonCss);
 
-const MainHeader = ({ auth, todos, commits }) => {
+const MainHeader = ({ todos }) => {
+  const auth = useAuth();
+
   return (
     <header className={styles.header}>
       <section className={styles.profile}>
@@ -17,7 +20,7 @@ const MainHeader = ({ auth, todos, commits }) => {
           />
           <div className={styles.profileDetail}>
             <h2 className={`${styles.profileName} ${styles.lgFont}`}>
-              {auth.user.displayName || "unnamed"}
+              {auth.user?.displayName || "unnamed"}
             </h2>
             <ul className={styles.profileStats}>
               <li className={styles.stat}>

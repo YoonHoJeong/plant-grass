@@ -5,36 +5,27 @@ import commonCss from "../common.module.css";
 import SideBar from "../components/sideBar/sideBar";
 import { useAuth } from "../hooks/useAuth";
 import MainHeader from "../components/main_header";
-import {
-  getDatabase,
-  ref,
-  onValue,
-  push,
-  child,
-  update,
-  set,
-} from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 import Dashboard from "../components/dashboard";
 import { useHistory } from "react-router";
+import useActionPopup from "../hooks/useActionPopup";
 
 let styles = {};
 Object.assign(styles, appCss, commonCss);
 
-const Main = ({ showActionPopup }) => {
+const Main = () => {
   const history = useHistory();
   const auth = useAuth();
-  const [userId, setUserId] = useState(history.state && history.state.id);
   const [todos, setTodos] = useState([]);
+  const [popup, showActionPopup] = useActionPopup();
 
   useEffect(() => {
-    console.log("main, mount");
-    console.log(auth);
-    getTodosById(auth.user.uid);
+    getTodosById(auth.user?.uid);
 
     if (auth === null || auth === undefined) {
       history.push("/login");
     }
-  }, []);
+  }, [auth, history]);
 
   const getTodosById = async (uid) => {
     const db = getDatabase();
@@ -55,38 +46,19 @@ const Main = ({ showActionPopup }) => {
     });
   };
 
-  const addTodo = (todoData) => {
-    // update todoRef
-    // update userRef
-    const {
-      user: { uid },
-    } = auth;
-
-    const db = getDatabase();
-    const userTodoListRef = ref(db, `users/${uid}/todos`);
-
-    const newTodoKey = push(child(ref(db), "posts")).key;
-    const newUserTodoRef = push(userTodoListRef);
-
-    // push todo key into user/uid/todos
-    set(newUserTodoRef, newTodoKey);
-
-    // update todos Ref
-    const updates = {};
-    updates[`/todos/` + newTodoKey] = todoData;
-    update(ref(db), updates);
-  };
-
   return (
-    <div className={styles.appContainer}>
-      <SideBar />
-      <main className={styles.appMain}>
-        <div className={styles.pageContainer}>
-          <MainHeader auth={auth} todos={todos} />
-          <Dashboard todos={todos} showActionPopup={showActionPopup} />
-        </div>
-      </main>
-    </div>
+    <>
+      {popup}
+      <div className={styles.appContainer}>
+        <SideBar />
+        <main className={styles.appMain}>
+          <div className={styles.pageContainer}>
+            <MainHeader todos={todos} />
+            <Dashboard todos={todos} showActionPopup={showActionPopup} />
+          </div>
+        </main>
+      </div>
+    </>
   );
 };
 

@@ -25,7 +25,7 @@ const TodoItem = ({ todoTitle }) => {
     return () => {
       unsub();
     };
-  }, []);
+  }, [initTodo, todoTitle]);
 
   const initTodo = async () => {
     const docRef = doc(fireStore, "todos", todoTitle);

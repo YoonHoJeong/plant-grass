@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import TodoItem from "../todo_item/todo_item";
 import { TodoContext } from "../../contexts/TodoContext";
 import styles from "./todo_list.module.css";

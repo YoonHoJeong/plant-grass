@@ -1,25 +1,16 @@
-import React, { useState } from "react";
-import { ProvideAuth, useAuth } from "./hooks/useAuth";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import React from "react";
+import { ProvideAuth } from "./hooks/useAuth";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Login from "./login";
 import Main from "./routes/main";
 
 import Signup from "./signup";
-import useActionPopup from "./hooks/useActionPopup";
-import PrivateRoute from "./PrivateRoute";
+// import PrivateRoute from "./PrivateRoute";
 
 const AppTest = () => {
-  const [popup, showActionPopup, hideActionPopup] = useActionPopup();
-
   return (
     <ProvideAuth>
-      {popup}
       <Router>
         <Switch>
           <Route path="/signup">
@@ -29,7 +20,7 @@ const AppTest = () => {
             <Login />
           </Route>
           <Route path="/">
-            <Main showActionPopup={showActionPopup} />
+            <Main />
           </Route>
         </Switch>
       </Router>

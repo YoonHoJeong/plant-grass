@@ -7,6 +7,8 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import firebaseApp from "../services/firebase";
+
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const authContext = createContext();
@@ -33,7 +35,7 @@ function useProvideAuth() {
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
-  const auth = getAuth();
+  const auth = getAuth(firebaseApp);
 
   const handleUser = (rawUser) => {
     if (rawUser) {

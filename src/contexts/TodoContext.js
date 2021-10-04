@@ -14,7 +14,7 @@ const TodoContextProvider = (props) => {
 
   useEffect(() => {
     syncTodos();
-  }, []);
+  }, [syncTodos]);
 
   const syncTodos = async () => {
     const loadTodos = await storeManager.loadTodos();

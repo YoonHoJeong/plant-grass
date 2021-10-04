@@ -1,13 +1,39 @@
 import React, { useState } from "react";
 import styles from "../common.module.css";
+import { getDatabase, ref, push, child, update } from "firebase/database";
+import firebaseApp from "../services/firebase";
+import { useAuth } from "../hooks/useAuth";
+
+const writeNewTodo = (uid, title) => {
+  const db = getDatabase(firebaseApp);
+
+  const todoData = {
+    uid: uid,
+    title: title,
+    commits: {},
+  };
+
+  // Get a key for a new post.
+  const newTodoKey = push(child(ref(db), "todos")).key;
+
+  // Write the new post's data simultaneously in the posts list and the user's post list.
+  const updates = {};
+  updates["/todos/" + newTodoKey] = todoData;
+  updates["/user-todos/" + uid + "/" + newTodoKey] = todoData;
+
+  return update(ref(db), updates);
+};
 
 const useActionPopup = () => {
   const [show, setShow] = useState(false);
   const [actionTitle, setActionTitle] = useState("");
+  const auth = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("actionTitle: ", actionTitle);
+    writeNewTodo(auth.user?.uid, actionTitle);
+
     setActionTitle("");
     setShow(false);
   };
@@ -18,7 +44,8 @@ const useActionPopup = () => {
         <form className={styles.popupForm} onSubmit={handleSubmit}>
           <button
             className={styles.closeBtn}
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               setShow(false);
             }}
           >
@@ -37,8 +64,7 @@ const useActionPopup = () => {
 
           <button
             className={`${styles.btn} ${styles.loginBtn}`}
-            type="submit"
-            disabled={false}
+            onClick={handleSubmit}
           >
             Add Action
           </button>

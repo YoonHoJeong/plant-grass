@@ -50,7 +50,7 @@ const Signup = () => {
           validationSchema={SignupSchema}
           onSubmit={async (values, { setSubmitting }) => {
             const { email, password, displayName } = values;
-            const uid = await signup(email, password, displayName);
+            await signup(email, password, displayName);
 
             showLoader();
             history.push({
