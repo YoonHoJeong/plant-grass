@@ -21,8 +21,8 @@ const Dashboard = ({ todos, showActionPopup }) => {
         Add Action
       </button>
       <ul className={styles.todoCards}>
-        {Object.keys(todos).map((key) => {
-          return <TodoCard todo={todos[key]} />;
+        {Object.keys(todos || {}).map((key) => {
+          return <TodoCard key={todos[key].id} todo={todos[key]} />;
         })}
       </ul>
     </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import todoCardCss from "./todo_card.module.css";
 import commonCss from "../../common.module.css";
+import dbManager from "../../services/dbManager";
 
 let styles = {};
 
@@ -8,7 +9,12 @@ Object.assign(styles, todoCardCss, commonCss);
 
 const TodoCard = ({ todo }) => (
   <li className={styles.todoCard}>
-    <button className={`${styles.btn} ${styles.closeBtn}`}></button>
+    <button
+      className={`${styles.btn} ${styles.closeBtn}`}
+      onClick={() => dbManager.deleteTodo(todo.id)}
+    >
+      close
+    </button>
     <section>
       <header className={styles.indexText}>TODO NAME</header>
       <div className={styles.todoTitle}>

@@ -20,12 +20,12 @@ const MainHeader = ({ todos }) => {
           />
           <div className={styles.profileDetail}>
             <h2 className={`${styles.profileName} ${styles.lgFont}`}>
-              {auth.user?.displayName || "unnamed"}
+              {auth.user?.name || "unnamed"}
             </h2>
             <ul className={styles.profileStats}>
               <li className={styles.stat}>
                 <span className={styles.count}>
-                  {Object.keys(todos).length}
+                  {Object.keys(todos || {}).length}
                 </span>
                 Todos
               </li>

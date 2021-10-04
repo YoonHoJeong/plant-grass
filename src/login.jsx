@@ -28,6 +28,7 @@ const Login = (props) => {
   let [loader, showLoader, hideLoader] = useLoader();
 
   useEffect(() => {
+    console.log("login", "mount", auth.user);
     if (auth.user) {
       // 세션에 로그인된 유저가 있는 경우, Main으로 이동
       goToMain();

@@ -29,8 +29,15 @@ const Main = () => {
   }, [auth, history]);
 
   useEffect(() => {
-    setTodos(dbManager.getTodos());
-  }, [dbManager.todos]);
+    if (!auth.user) {
+      return;
+    }
+    const stopSync = dbManager.syncTodos((todos) => {
+      setTodos(todos);
+    });
+
+    return () => stopSync();
+  }, [auth.user]);
 
   return (
     <>
