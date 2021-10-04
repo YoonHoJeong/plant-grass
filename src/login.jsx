@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import loginCss from "./login.module.css";
 import commonCss from "./common.module.css";
 import { Link, useHistory } from "react-router-dom";
@@ -19,27 +19,21 @@ const LoginSchema = Yup.object().shape({
 const Login = (props) => {
   const auth = useAuth();
   const history = useHistory();
-  const goToMain = () => {
-    const {
-      user: { uid },
-    } = auth;
-
+  const goToMain = useCallback(() => {
     history.push({
       pathname: "/",
-      state: { id: uid },
     });
-  };
+  }, []);
 
   let [loader, showLoader, hideLoader] = useLoader();
 
   useEffect(() => {
-    const user = auth.user;
-
-    if (user !== null && user !== undefined) {
-      goToMain(user.uid);
+    if (auth.user) {
+      // 세션에 로그인된 유저가 있는 경우, Main으로 이동
+      goToMain();
     }
     hideLoader();
-  }, []);
+  }, [auth.user, goToMain, hideLoader]);
 
   return loader ? (
     loader

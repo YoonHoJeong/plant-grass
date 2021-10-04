@@ -20,10 +20,12 @@ const Main = () => {
   const [popup, showActionPopup] = useActionPopup();
 
   useEffect(() => {
-    getTodosById(auth.user?.uid);
-
-    if (auth === null || auth === undefined) {
+    if (!auth.user) {
+      // login 되지 않은 경우
       history.push("/login");
+    } else {
+      // auth.user is not null
+      getTodosById(auth.user.uid);
     }
   }, [auth, history]);
 

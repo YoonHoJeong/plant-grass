@@ -1,28 +1,7 @@
 import React, { useState } from "react";
 import styles from "../common.module.css";
-import { getDatabase, ref, push, child, update } from "firebase/database";
-import firebaseApp from "../services/firebase";
 import { useAuth } from "../hooks/useAuth";
-
-const writeNewTodo = (uid, title) => {
-  const db = getDatabase(firebaseApp);
-
-  const todoData = {
-    uid: uid,
-    title: title,
-    commits: {},
-  };
-
-  // Get a key for a new post.
-  const newTodoKey = push(child(ref(db), "todos")).key;
-
-  // Write the new post's data simultaneously in the posts list and the user's post list.
-  const updates = {};
-  updates["/todos/" + newTodoKey] = todoData;
-  updates["/user-todos/" + uid + "/" + newTodoKey] = todoData;
-
-  return update(ref(db), updates);
-};
+import dbManager from "../services/dbManager";
 
 const useActionPopup = () => {
   const [show, setShow] = useState(false);
@@ -32,7 +11,7 @@ const useActionPopup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("actionTitle: ", actionTitle);
-    writeNewTodo(auth.user?.uid, actionTitle);
+    dbManager.writeNewTodo(auth.user?.uid, actionTitle);
 
     setActionTitle("");
     setShow(false);
