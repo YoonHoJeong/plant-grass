@@ -11,7 +11,7 @@ const useActionPopup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("actionTitle: ", actionTitle);
-    dbManager.writeNewTodo(auth.user?.uid, actionTitle);
+    dbManager.writeNewTodo(actionTitle);
 
     setActionTitle("");
     setShow(false);
