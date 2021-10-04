@@ -83,6 +83,6 @@
 
 .todoCard > .closeBtn {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 28px;
+  top: 28px;
 }

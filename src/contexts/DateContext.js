@@ -1,10 +1,3 @@
-import { createContext, useEffect, useState } from "react";
-
-export const getToday = () => {
-  return dateToString(new Date());
-};
-export const DateContext = createContext();
-
 function leftPad(value) {
   if (value >= 10) {
     return value;
@@ -19,26 +12,18 @@ const dateToString = (date) => {
   return [year, month, day].join("-");
 };
 
-const DateContextProvider = (props) => {
-  const [dates, setDates] = useState([]);
+export const get28days = () => {
+  const today = new Date();
 
-  useEffect(() => {
-    const today = new Date();
-
-    const newDates = [];
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date(today.getTime());
-      date.setDate(date.getDate() - i);
-      newDates.push(dateToString(date));
-    }
-    setDates(newDates);
-  }, []);
-
-  const value = { dates, getToday };
-
-  return (
-    <DateContext.Provider value={value}>{props.children}</DateContext.Provider>
-  );
+  const newDates = [];
+  for (let i = 27; i >= 0; i--) {
+    const date = new Date(today.getTime());
+    date.setDate(date.getDate() - i);
+    newDates.push(dateToString(date));
+  }
+  return newDates;
 };
 
-export default DateContextProvider;
+export const getToday = () => {
+  return dateToString(new Date());
+};

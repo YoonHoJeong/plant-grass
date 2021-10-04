@@ -2,6 +2,7 @@ import React from "react";
 import todoCardCss from "./todo_card.module.css";
 import commonCss from "../../common.module.css";
 import dbManager from "../../services/dbManager";
+import { get28days } from "../../contexts/DateContext";
 
 let styles = {};
 
@@ -26,10 +27,9 @@ const TodoCard = ({ todo }) => (
       <div>
         <div className={styles.indexText}>RECORDS</div>
         <ul className={styles.grassContainer}>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          {get28days().map((date) => (
+            <li date={date}></li>
+          ))}
         </ul>
       </div>
       <div className={styles.bestRecord}>
