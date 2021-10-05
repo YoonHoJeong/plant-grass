@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import StoreManager from "../services/storeManager";
+import StoreManager from "../services/dbManager";
 import useLoader from "../hooks/useLoader";
 import { fireStore } from "../services/firebase";
 import { deleteDoc, doc } from "@firebase/firestore";

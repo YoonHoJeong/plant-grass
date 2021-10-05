@@ -1,19 +1,38 @@
 import React, { useState } from "react";
 import styles from "../common.module.css";
-import { useAuth } from "../hooks/useAuth";
 import dbManager from "../services/dbManager";
 
-const useActionPopup = () => {
+const getPlaceholders = (type) => {
+  let placeholders = false;
+  if (type === "todo" || type === "commit") {
+    placeholders = {
+      title: `Enter the ${type} title`,
+      content: `Enter ${type} content`,
+    };
+  }
+  return placeholders;
+};
+
+const useActionPopup = (type = "todo") => {
   const [show, setShow] = useState(false);
-  const [actionTitle, setActionTitle] = useState("");
-  const auth = useAuth();
+  const [values, setValues] = useState({ title: "", content: "" });
+  const [placeholders, setPlaceholders] = useState(getPlaceholders(type));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("actionTitle: ", actionTitle);
-    dbManager.writeNewTodo(actionTitle);
+    console.log("title:", values.title);
 
-    setActionTitle("");
+    switch (type) {
+      case "todo":
+        dbManager.writeNewTodo(values.title);
+        break;
+      case "commit":
+        dbManager.writeNewCommit(values);
+      default:
+        break;
+    }
+
+    setValues({ title: "", content: "" });
     setShow(false);
   };
 
@@ -33,13 +52,23 @@ const useActionPopup = () => {
           <input
             className={styles.textInput}
             type="text"
-            name="actionTitle"
-            placeholder="Enter the action title"
-            value={actionTitle}
+            name="title"
+            placeholder={placeholders.title}
+            autoComplete="off"
+            value={values.title}
             onChange={(e) => {
-              setActionTitle(e.target.value);
+              setValues((currentValues) => ({
+                ...currentValues,
+                [e.target.name]: e.target.value,
+              }));
             }}
           />
+          {type === "commit" && (
+            <textarea
+              className={styles.textarea}
+              placeholder={placeholders.content}
+            />
+          )}
 
           <button
             className={`${styles.btn} ${styles.loginBtn}`}

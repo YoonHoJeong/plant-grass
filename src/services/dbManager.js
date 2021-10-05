@@ -56,6 +56,30 @@ export class DBManager {
       return update(ref(this.db), updates);
     }
   };
+  writeNewCommit = (todoId, title, content) => {
+    if (!this.user) {
+      // login 되지 않았을 때,
+      console.log(TAG, "writeNewCommit: user is not logged in.");
+    } else {
+      // login 되었을 때,
+
+      // Get a key for a new commit.
+      const newCommitKey = push(child(ref(this.db), "commits")).key;
+
+      const commitData = {
+        id: newCommitKey,
+        todoId: todoId,
+        title: title,
+        content: content,
+      };
+
+      const updates = {};
+      updates["/commits/" + newCommitKey] = commitData;
+      updates["/todo-commits/" + todoId + "/" + newCommitKey] = commitData;
+
+      return update(ref(this.db), updates);
+    }
+  };
 
   writeNewTodo = (title) => {
     if (!this.user) {
