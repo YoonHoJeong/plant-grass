@@ -86,3 +86,7 @@
   right: 28px;
   top: 28px;
 }
+
+li.commit {
+  background-color: cadetblue;
+}

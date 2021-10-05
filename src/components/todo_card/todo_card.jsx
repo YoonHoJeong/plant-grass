@@ -8,6 +8,19 @@ let styles = {};
 
 Object.assign(styles, todoCardCss, commonCss);
 
+const getCommitDates = (todo) => {
+  let dates = new Set();
+  const commits = todo.commits || {};
+
+  Object.keys(commits).forEach((cId) => {
+    dates.add(commits[cId].date);
+  });
+
+  console.log(dates.has("2021-10-05"));
+
+  return dates;
+};
+
 const TodoCard = ({ todo, showPopup }) => {
   const handleCommit = (e) => {
     showPopup("commit", todo);
@@ -17,6 +30,8 @@ const TodoCard = ({ todo, showPopup }) => {
       dbManager.deleteTodo(todo.id);
     }
   };
+  const commitDates = getCommitDates(todo);
+
   return (
     <li className={styles.todoCard}>
       <button
@@ -37,7 +52,10 @@ const TodoCard = ({ todo, showPopup }) => {
           <div className={styles.indexText}>RECORDS</div>
           <ul className={styles.grassContainer}>
             {get28days().map((date) => (
-              <li date={date}></li>
+              <li
+                className={commitDates.has(date) && styles.commit}
+                date={date}
+              ></li>
             ))}
           </ul>
         </div>
