@@ -7,7 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 import MainHeader from "../components/main_header";
 import Dashboard from "../components/dashboard";
 import { useHistory } from "react-router";
-import useActionPopup from "../hooks/useActionPopup";
+import usePopup from "../hooks/usePopup";
 import dbManager from "../services/dbManager";
 
 let styles = {};
@@ -17,7 +17,7 @@ const Main = () => {
   const history = useHistory();
   const auth = useAuth();
   const [todos, setTodos] = useState([]);
-  const [popup, showActionPopup] = useActionPopup();
+  const [popup, showActionPopup] = usePopup();
 
   useEffect(() => {
     if (!auth.user) {

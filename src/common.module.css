@@ -40,37 +40,8 @@
   border-radius: 8px;
 }
 
-/* form styles */
-.popupBG {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 999;
-}
-.popupBG.hide {
-  visibility: hidden;
-}
-
-.popupForm {
-  width: 500px;
-  height: 500px;
-  background-color: aquamarine;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .textInput {
-  width: 360px;
+  width: 100%;
   height: 50px;
 
   border: 1px solid var(--lightgray2);
@@ -83,7 +54,7 @@
 }
 
 .textarea {
-  width: 360px;
+  width: 100%;
   height: 150px;
   margin-top: 10px;
   overflow: auto hidden;

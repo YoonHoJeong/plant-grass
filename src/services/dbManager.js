@@ -8,6 +8,7 @@ import {
   onValue,
 } from "firebase/database";
 import firebaseApp from "./firebase";
+import { getToday } from "../contexts/DateContext";
 
 const TAG = "DBManger";
 
@@ -56,7 +57,7 @@ export class DBManager {
       return update(ref(this.db), updates);
     }
   };
-  writeNewCommit = (todoId, title, content) => {
+  writeNewCommit = (todoId, commit) => {
     if (!this.user) {
       // login 되지 않았을 때,
       console.log(TAG, "writeNewCommit: user is not logged in.");
@@ -69,8 +70,9 @@ export class DBManager {
       const commitData = {
         id: newCommitKey,
         todoId: todoId,
-        title: title,
-        content: content,
+        date: getToday(),
+        title: commit.title,
+        content: commit.content,
       };
 
       const updates = {};
@@ -95,6 +97,7 @@ export class DBManager {
       const todoData = {
         id: newTodoKey,
         uid: uid,
+        date: getToday(),
         title: title,
         commits: {},
       };

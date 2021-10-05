@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import styles from "../common.module.css";
+import commonStyles from "../common.module.css";
+import popupStyles from "./popup.module.css";
 import dbManager from "../services/dbManager";
+
+let styles = {};
+Object.assign(styles, commonStyles, popupStyles);
 
 const getPlaceholders = (type) => {
   let placeholders = false;
@@ -13,10 +17,11 @@ const getPlaceholders = (type) => {
   return placeholders;
 };
 
-const useActionPopup = () => {
+const usePopup = () => {
   const [show, setShow] = useState(false);
   const [values, setValues] = useState({ title: "", content: "" });
   const [type, setType] = useState("");
+  const [todo, setTodo] = useState(false); // to use commit
   const placeholders = getPlaceholders(type);
 
   const handleSubmit = (e) => {
@@ -28,7 +33,11 @@ const useActionPopup = () => {
         dbManager.writeNewTodo(values.title);
         break;
       case "commit":
-        dbManager.writeNewCommit(values);
+        if (todo) {
+          dbManager.writeNewCommit(todo.id, values);
+        } else {
+          console.log(handleSubmit, "todo is empty");
+        }
         break;
       default:
         break;
@@ -42,15 +51,18 @@ const useActionPopup = () => {
     show ? (
       <div className={`${styles.popupBG} ${!show && styles.hide}`}>
         <form className={styles.popupForm} onSubmit={handleSubmit}>
-          <button
-            className={styles.closeBtn}
-            onClick={(e) => {
-              e.preventDefault();
-              setShow(false);
-            }}
-          >
-            close
-          </button>
+          <header className={styles.popupHeader}>
+            {todo?.title}
+            <button
+              className={`${styles.btn} ${styles.closeBtn}`}
+              onClick={(e) => {
+                e.preventDefault();
+                setShow(false);
+              }}
+            >
+              close
+            </button>
+          </header>
           <input
             className={styles.textInput}
             type="text"
@@ -67,8 +79,15 @@ const useActionPopup = () => {
           />
           {type === "commit" && (
             <textarea
+              name="content"
               className={styles.textarea}
               placeholder={placeholders.content}
+              onChange={(e) => {
+                setValues((currentValues) => ({
+                  ...currentValues,
+                  [e.target.name]: e.target.value,
+                }));
+              }}
             />
           )}
 
@@ -76,12 +95,13 @@ const useActionPopup = () => {
             className={`${styles.btn} ${styles.loginBtn}`}
             onClick={handleSubmit}
           >
-            Add Action
+            {`Add ${type}`}
           </button>
         </form>
       </div>
     ) : null,
-    (type) => {
+    (type, todo) => {
+      setTodo(todo);
       setType(type);
       setShow(true);
     },
@@ -89,4 +109,4 @@ const useActionPopup = () => {
   ];
 };
 
-export default useActionPopup;
+export default usePopup;

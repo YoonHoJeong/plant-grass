@@ -1,0 +1,38 @@
+/* form styles */
+.popupBG {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+}
+.popupBG.hide {
+  visibility: hidden;
+}
+
+.popupHeader {
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+
+  align-items: center;
+}
+
+.popupForm {
+  width: 500px;
+  height: 500px;
+  background-color: aquamarine;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 70px;
+}

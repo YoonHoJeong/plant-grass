@@ -3,7 +3,6 @@ import todoCardCss from "./todo_card.module.css";
 import commonCss from "../../common.module.css";
 import dbManager from "../../services/dbManager";
 import { get28days } from "../../contexts/DateContext";
-import useActionPopup from "../../hooks/useActionPopup";
 
 let styles = {};
 
@@ -11,13 +10,18 @@ Object.assign(styles, todoCardCss, commonCss);
 
 const TodoCard = ({ todo, showPopup }) => {
   const handleCommit = (e) => {
-    showPopup("commit");
+    showPopup("commit", todo);
+  };
+  const handleClose = (e) => {
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      dbManager.deleteTodo(todo.id);
+    }
   };
   return (
     <li className={styles.todoCard}>
       <button
         className={`${styles.btn} ${styles.closeBtn}`}
-        onClick={() => dbManager.deleteTodo(todo.id)}
+        onClick={handleClose}
       >
         close
       </button>
