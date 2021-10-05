@@ -7,6 +7,20 @@ import { useAuth } from "../../hooks/useAuth";
 let styles = {};
 Object.assign(styles, headerCss, commonCss);
 
+const countCommits = (todos) => {
+  let count = 0;
+
+  Object.keys(todos || {}).forEach((todoId) => {
+    const commits = todos[todoId].commits || {};
+    console.log("todo:", todos[todoId]);
+    const commitCount = Object.keys(commits).length;
+
+    count += commitCount;
+  });
+
+  return count;
+};
+
 const MainHeader = ({ todos }) => {
   const auth = useAuth();
 
@@ -30,7 +44,8 @@ const MainHeader = ({ todos }) => {
                 Todos
               </li>
               <li className={styles.stat}>
-                <span className={styles.count}>33</span> TOTAL COMMITS
+                <span className={styles.count}>{countCommits(todos)}</span>{" "}
+                TOTAL COMMITS
               </li>
             </ul>
           </div>

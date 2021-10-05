@@ -77,7 +77,18 @@ export class DBManager {
 
       const updates = {};
       updates["/commits/" + newCommitKey] = commitData;
+      updates["/users/" + this.user.uid + "/todos/commits/" + newCommitKey] =
+        commitData;
+      updates[
+        "/user-todos/" +
+          this.user.uid +
+          "/" +
+          todoId +
+          "/commits/" +
+          newCommitKey
+      ] = commitData;
       updates["/todo-commits/" + todoId + "/" + newCommitKey] = commitData;
+      updates["/todos/" + todoId + "/commits/" + newCommitKey] = commitData;
 
       return update(ref(this.db), updates);
     }
