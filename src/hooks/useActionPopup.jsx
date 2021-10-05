@@ -13,10 +13,11 @@ const getPlaceholders = (type) => {
   return placeholders;
 };
 
-const useActionPopup = (type = "todo") => {
+const useActionPopup = () => {
   const [show, setShow] = useState(false);
   const [values, setValues] = useState({ title: "", content: "" });
-  const [placeholders, setPlaceholders] = useState(getPlaceholders(type));
+  const [type, setType] = useState("");
+  const placeholders = getPlaceholders(type);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ const useActionPopup = (type = "todo") => {
         break;
       case "commit":
         dbManager.writeNewCommit(values);
+        break;
       default:
         break;
     }
@@ -79,7 +81,10 @@ const useActionPopup = (type = "todo") => {
         </form>
       </div>
     ) : null,
-    () => setShow(true),
+    (type) => {
+      setType(type);
+      setShow(true);
+    },
     () => setShow(false),
   ];
 };

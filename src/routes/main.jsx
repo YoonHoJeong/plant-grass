@@ -47,7 +47,7 @@ const Main = () => {
         <main className={styles.appMain}>
           <div className={styles.pageContainer}>
             <MainHeader todos={todos} />
-            <Dashboard todos={todos} showActionPopup={showActionPopup} />
+            <Dashboard todos={todos} showPopup={showActionPopup} />
           </div>
         </main>
       </div>
