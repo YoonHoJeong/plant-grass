@@ -11,6 +11,10 @@
   src: local("Roboto"), url(./fonts/Roboto-Medium.ttf) format("truetype");
 }
 
+#root {
+  height: 100%;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

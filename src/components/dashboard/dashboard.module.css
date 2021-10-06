@@ -16,5 +16,6 @@
 }
 
 .todoCards {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
 }

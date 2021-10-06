@@ -15,6 +15,11 @@
   --sm-font-size: 12px;
 }
 
+html,
+body {
+  background-color: var(--lightgray3);
+}
+
 .lgFont {
   font-size: var(--lg-font-size);
 }

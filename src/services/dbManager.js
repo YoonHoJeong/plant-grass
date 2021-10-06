@@ -57,6 +57,7 @@ export class DBManager {
       return update(ref(this.db), updates);
     }
   };
+
   writeNewCommit = (todoId, commit) => {
     if (!this.user) {
       // login 되지 않았을 때,
@@ -121,6 +122,23 @@ export class DBManager {
       return update(ref(this.db), updates);
     }
   };
+
+  updateTodoTitle(todoId, title) {
+    if (!this.user) {
+      // login 되지 않았을 때,
+      console.log(TAG, "writeNewTodo: user is not logged in.");
+    } else {
+      // login 되었을 때,
+      const uid = this.user.uid;
+
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      const updates = {};
+      updates["/todos/" + todoId + "/title/"] = title;
+      updates["/user-todos/" + uid + "/" + todoId + "/title/"] = title;
+
+      return update(ref(this.db), updates);
+    }
+  }
 
   getTodos() {
     console.log(TAG, "getTodos");

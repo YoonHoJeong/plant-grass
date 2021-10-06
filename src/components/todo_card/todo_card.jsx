@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import todoCardCss from "./todo_card.module.css";
 import commonCss from "../../common.module.css";
 import dbManager from "../../services/dbManager";
@@ -22,12 +22,28 @@ const getCommitDates = (todo) => {
 };
 
 const TodoCard = ({ todo, showPopup }) => {
+  const titleRef = useRef();
+
   const handleCommit = (e) => {
     showPopup("commit", todo);
   };
   const handleClose = (e) => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       dbManager.deleteTodo(todo.id);
+    }
+  };
+  const handleEdit = (e) => {
+    const editable = titleRef.current.getAttribute("contenteditable");
+    console.log(editable);
+    if (editable === "true") {
+      // 수정 완료
+      e.target.innerText = "edit";
+      titleRef.current.setAttribute("contenteditable", false);
+      dbManager.updateTodoTitle(todo.id, titleRef.current.innerText);
+    } else {
+      // 수정 요청
+      e.target.innerText = "done";
+      titleRef.current.setAttribute("contenteditable", true);
     }
   };
   const commitDates = getCommitDates(todo);
@@ -43,8 +59,12 @@ const TodoCard = ({ todo, showPopup }) => {
       <section>
         <header className={styles.indexText}>TODO NAME</header>
         <div className={styles.todoTitle}>
-          <h2 className={styles.lgFont}>{todo.title}</h2>
-          <a className={styles.editBtn}>Edit</a>
+          <div ref={titleRef} className={styles.lgFont}>
+            {todo.title}
+          </div>
+          <button className={styles.editBtn} onClick={handleEdit}>
+            Edit
+          </button>
         </div>
       </section>
       <section className={styles.records}>
@@ -53,15 +73,12 @@ const TodoCard = ({ todo, showPopup }) => {
           <ul className={styles.grassContainer}>
             {get28days().map((date) => (
               <li
-                className={commitDates.has(date) && styles.commit}
+                key={date}
+                className={commitDates.has(date) ? styles.commit : null}
                 date={date}
               ></li>
             ))}
           </ul>
-        </div>
-        <div className={styles.bestRecord}>
-          <div className={styles.indexText}>BEST RECORD</div>
-          <div className={styles.bestRecordStat}>100 days</div>
         </div>
       </section>
       <section>

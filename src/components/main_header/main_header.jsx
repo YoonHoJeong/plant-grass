@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import headerCss from "./main_header.module.css";
 import commonCss from "../../common.module.css";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -7,22 +7,21 @@ import { useAuth } from "../../hooks/useAuth";
 let styles = {};
 Object.assign(styles, headerCss, commonCss);
 
-const countCommits = (todos) => {
-  let count = 0;
-
-  Object.keys(todos || {}).forEach((todoId) => {
-    const commits = todos[todoId].commits || {};
-    console.log("todo:", todos[todoId]);
-    const commitCount = Object.keys(commits).length;
-
-    count += commitCount;
-  });
-
-  return count;
-};
-
 const MainHeader = ({ todos }) => {
   const auth = useAuth();
+  const countCommits = useCallback((todos) => {
+    let count = 0;
+
+    Object.keys(todos || {}).forEach((todoId) => {
+      const commits = todos[todoId].commits || {};
+      console.log("todo:", todos[todoId]);
+      const commitCount = Object.keys(commits).length;
+
+      count += commitCount;
+    });
+
+    return count;
+  }, []);
 
   return (
     <header className={styles.header}>

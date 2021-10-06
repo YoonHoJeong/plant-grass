@@ -1,7 +1,7 @@
 .todoCard {
   position: relative;
 
-  width: 420px;
+  width: 300px;
   height: 353px;
   padding: 28px;
 
@@ -12,6 +12,7 @@
   background: #ffffff;
   box-shadow: 0px 2px 4px rgba(33, 36, 41, 0.05);
   border-radius: 16px;
+  margin: 10px;
 }
 
 .todoTitle {
@@ -24,12 +25,18 @@
   color: var(--lightgray1);
   color: var(--lightgray2);
   margin-left: 8px;
+
+  background-color: transparent;
+  border: none;
+}
+
+.editBtn:hover {
+  color: var(--activeBlue);
 }
 
 .records {
   width: 100%;
-  flex: 1;
-  margin: 16px 0;
+  margin: 8px 0;
 
   display: flex;
   justify-content: space-between;
@@ -75,7 +82,7 @@
 }
 
 .commitBtn {
-  width: var(--md-btn-width);
+  width: 100%;
   background-color: var(--activeBlue);
 
   color: white;
