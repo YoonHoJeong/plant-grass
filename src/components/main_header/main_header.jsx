@@ -8,7 +8,7 @@ let styles = {};
 Object.assign(styles, headerCss, commonCss);
 
 const MainHeader = ({ todos }) => {
-  const auth = useAuth();
+  const { user, signout } = useAuth();
   const countCommits = useCallback((todos) => {
     let count = 0;
 
@@ -33,7 +33,7 @@ const MainHeader = ({ todos }) => {
           />
           <div className={styles.profileDetail}>
             <h2 className={`${styles.profileName} ${styles.lgFont}`}>
-              {auth.user?.name || "unnamed"}
+              {user?.name || "unnamed"}
             </h2>
             <ul className={styles.profileStats}>
               <li className={styles.stat}>
@@ -43,24 +43,16 @@ const MainHeader = ({ todos }) => {
                 Todos
               </li>
               <li className={styles.stat}>
-                <span className={styles.count}>{countCommits(todos)}</span>{" "}
+                <span className={styles.count}>{countCommits(todos)}</span>
                 TOTAL COMMITS
               </li>
             </ul>
           </div>
         </div>
         <div className={styles.profileMore}>
-          <button className={`${styles.btn} ${styles.moreBtn}`}>
-            <MoreHorizIcon />
-          </button>
-          <button className={`${styles.btn} ${styles.editProfileBtn}`}>
-            Edit Profile
-          </button>
           <button
             className={`${styles.btn} ${styles.editProfileBtn}`}
-            onClick={() => {
-              auth.signout();
-            }}
+            onClick={signout}
           >
             logout
           </button>

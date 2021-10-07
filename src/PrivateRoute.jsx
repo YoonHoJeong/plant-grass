@@ -8,17 +8,7 @@ const PrivateRoute = ({ children, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(routeProps) =>
-        user ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-            }}
-          />
-        )
-      }
+      render={() => (user ? children : <Redirect to="/login" />)}
     />
   );
 };

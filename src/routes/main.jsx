@@ -21,15 +21,6 @@ const Main = () => {
 
   useEffect(() => {
     if (!auth.user) {
-      // login 되지 않은 경우
-      history.push("/login");
-    } else {
-      // auth.user is not null
-    }
-  }, [auth, history]);
-
-  useEffect(() => {
-    if (!auth.user) {
       return;
     }
     const stopSync = dbManager.syncTodos((todos) => {

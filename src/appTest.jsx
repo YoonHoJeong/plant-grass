@@ -1,16 +1,20 @@
 import React from "react";
-import { ProvideAuth } from "./hooks/useAuth";
+import { useAuth } from "./hooks/useAuth";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Login from "./login";
 import Main from "./routes/main";
 
 import Signup from "./signup";
-// import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const AppTest = () => {
-  return (
-    <ProvideAuth>
+  const { isAuthenticating } = useAuth();
+
+  if (isAuthenticating) {
+    return <div>Loading</div>;
+  } else {
+    return (
       <Router>
         <Switch>
           <Route path="/signup">
@@ -19,13 +23,13 @@ const AppTest = () => {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/">
+          <PrivateRoute path="/">
             <Main />
-          </Route>
+          </PrivateRoute>
         </Switch>
       </Router>
-    </ProvideAuth>
-  );
+    );
+  }
 };
 
 export default AppTest;

@@ -31,7 +31,7 @@ const createUser = async (uid, userData) => {
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
@@ -44,11 +44,8 @@ function useProvideAuth() {
       createUser(user.uid, user);
       setUser(user);
 
-      setLoading(false);
-
       return user;
     } else {
-      setLoading(false);
       setUser(false);
 
       return false;
@@ -118,6 +115,7 @@ function useProvideAuth() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       handleUser(user);
+      setIsAuthenticating(false);
     });
 
     // Cleanup subscription on unmount
@@ -127,7 +125,7 @@ function useProvideAuth() {
   // Return the user object and auth methods
   return {
     user,
-    loading,
+    isAuthenticating,
     signin,
     signup,
     signout,
