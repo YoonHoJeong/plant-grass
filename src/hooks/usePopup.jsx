@@ -25,9 +25,13 @@ const usePopup = () => {
   const [todo, setTodo] = useState(false); // to use commit
   const placeholders = getPlaceholders(type);
 
+  const handleClose = (e) => {
+    e.preventDefault();
+    setShow(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("title:", values.title);
 
     switch (type) {
       case "todo":
@@ -52,6 +56,9 @@ const usePopup = () => {
     show ? (
       <div className={`${styles.popupBG} ${!show && styles.hide}`}>
         <form className={styles.popupForm} onSubmit={handleSubmit}>
+          <button className={styles.closeIcon} onClick={handleClose}>
+            <CloseIcon />
+          </button>
           <header className={styles.popupHeader}>{todo?.title}</header>
           <input
             className={styles.textInput}
@@ -94,10 +101,7 @@ const usePopup = () => {
             </button>
             <button
               className={`${styles.btn} ${styles.closeBtn}`}
-              onClick={(e) => {
-                e.preventDefault();
-                setShow(false);
-              }}
+              onClick={handleClose}
             >
               close
             </button>

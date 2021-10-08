@@ -32,6 +32,7 @@
 
 .cardTitle {
   font-size: 1.25rem;
+  padding-left: 6px;
 }
 
 .editBtn {
@@ -49,7 +50,7 @@
 
 .records {
   width: 100%;
-  margin: 8px 0;
+  margin: 14px 0;
 
   display: flex;
   justify-content: space-between;
@@ -97,8 +98,6 @@
 .commitBtn {
   width: 100%;
   background-color: var(--activeBlue);
-
-  margin-top: 6px;
 
   color: white;
 }
