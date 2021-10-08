@@ -70,6 +70,11 @@ const usePopup = () => {
             placeholder={placeholders.title}
             autoComplete="off"
             value={values.title}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                handleSubmit(e);
+              }
+            }}
             onChange={(e) => {
               setValues((currentValues) => ({
                 ...currentValues,

@@ -1,29 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import signupCss from "./login.module.css";
 import commonCss from "./common.module.css";
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import useLoader from "./hooks/useLoader";
+import dbManager from "./services/dbManager";
 
 let styles = {};
-
-const SignupSchema = Yup.object().shape({
-  email: Yup.string() //
-    .email("Invaild email")
-    .required("Required!"),
-  password: Yup.string()
-    .min(8, "Too short!")
-    .max(12, "Too Long!")
-    .required("Required!"),
-});
 
 Object.assign(styles, signupCss, commonCss);
 
 const Signup = () => {
   const { signup } = useAuth();
   const history = useHistory();
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleDuplicate = (e) => {
+    e.preventDefault();
+    dbManager.checkDuplicateEmail(email);
+  };
+  const handleChange = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   let [loader, showLoader, hideLoader] = useLoader();
 
   useEffect(() => {
@@ -45,72 +46,56 @@ const Signup = () => {
             SIGNUP ON THE INTERNAL PLATFORM
           </div>
         </div>
-        <Formik
-          initialValues={{ email: "", password: "", displayName: "" }}
-          validationSchema={SignupSchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            const { email, password, displayName } = values;
-            await signup(email, password, displayName);
 
-            showLoader();
-            history.push({
-              pathname: "/login",
-            });
+        <form>
+          <input
+            className={styles.textInput}
+            type="text"
+            name="displayName"
+            placeholder="Username"
+          />
+          <div
+            className={styles.errorMsg}
+            name="displayName"
+            component="div"
+          ></div>
+          <section>
+            <input
+              className={styles.textInput}
+              type="email"
+              name="email"
+              onChange={handleChange}
+              placeholder="Email Address"
+            />
+            <div className={styles.errorMsg} name="email" component="div"></div>
+            <button onClick={handleDuplicate}>중복 확인</button>
+          </section>
 
-            setSubmitting(false);
-          }}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              <Field
-                className={styles.textInput}
-                type="text"
-                name="displayName"
-                placeholder="Username"
-              />
-              <ErrorMessage
-                className={styles.errorMsg}
-                name="displayName"
-                component="div"
-              />
-              <Field
-                className={styles.textInput}
-                type="email"
-                name="email"
-                placeholder="Email Address"
-              />
-              <ErrorMessage
-                className={styles.errorMsg}
-                name="email"
-                component="div"
-              />
+          <input
+            className={styles.textInput}
+            type="password"
+            name="password"
+            placeholder="Password"
+          />
+          <div
+            className={styles.errorMsg}
+            name="password"
+            component="div"
+          ></div>
 
-              <Field
-                className={styles.textInput}
-                type="password"
-                name="password"
-                placeholder="Password"
-              />
-              <ErrorMessage
-                className={styles.errorMsg}
-                name="password"
-                component="div"
-              />
-
-              <div className={`${styles.indexText} ${styles.notification}`}>
-                <span>ALREADY HAS ACCOUNT?</span>
-                <Link to="/login">LOGIN</Link>
-              </div>
-              <button
-                className={`${styles.btn} ${styles.loginBtn}`}
-                type="submit"
-                disabled={isSubmitting}
-              >
-                SIGNUP
-              </button>
-            </Form>
-          )}
-        </Formik>
+          <div className={`${styles.indexText} ${styles.notification}`}>
+            <span>ALREADY HAS ACCOUNT?</span>
+            <Link to="/login">LOGIN</Link>
+          </div>
+          <button
+            className={`${styles.btn} ${styles.loginBtn}`}
+            type="submit"
+            onSubmit={handleSubmit}
+            disabled={isSubmitting}
+          >
+            SIGNUP
+          </button>
+        </form>
       </div>
     </div>
   );

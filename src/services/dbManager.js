@@ -6,6 +6,7 @@ import {
   child,
   update,
   onValue,
+  orderByChild,
 } from "firebase/database";
 import firebaseApp from "./firebase";
 import { getToday } from "../contexts/DateContext";
@@ -22,7 +23,6 @@ export class DBManager {
     this.todos = null;
 
     onAuthStateChanged(this.auth, (user) => {
-      console.log("onAuthStateChanged");
       if (user) {
         this.user = user;
       } else {
@@ -138,6 +138,11 @@ export class DBManager {
 
       return update(ref(this.db), updates);
     }
+  }
+  checkDuplicateEmail(email) {
+    // email 중복 확인
+    const usersRef = this.db.ref("users");
+    console.log(usersRef);
   }
 
   getTodos() {

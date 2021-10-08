@@ -7,12 +7,11 @@ Daily / Weekly Plan Todo List
 - [x] add / delete todos
 - [x] add only today's commit
 - [x] login / logout / signup
-- [ ] social communication
-- [ ] select grass color
+- [x] update todo title
+- [x] login after page reload (-> fix isAuthenticating)
 
 # Todos
 
-- [ ] update todo title
 - [ ] update user profile
 - [ ] update best record
-- [ ] login after page reload
+- [ ] hide api keys
