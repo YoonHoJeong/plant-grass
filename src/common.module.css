@@ -10,14 +10,22 @@
 
   --md-btn-width: 182px;
 
-  --lg-font-size: 28px;
+  --lg-font-size: 24px;
   --md-font-size: 16px;
   --sm-font-size: 12px;
+
+  --grass-size: 24px;
+  --card-padding: 12px;
 }
 
 html,
 body {
   background-color: var(--lightgray3);
+}
+
+button {
+  border: none;
+  background-color: transparent;
 }
 
 .lgFont {
@@ -42,7 +50,8 @@ body {
   background: none;
 
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
+  font-weight: 600;
 }
 
 .textInput {
@@ -75,7 +84,7 @@ body {
 }
 
 .loginBtn {
-  width: 360px;
+  width: 100%;
   background-color: var(--activeBlue);
 
   color: white;
@@ -83,4 +92,10 @@ body {
   border-radius: 4px;
 
   margin-top: 15px;
+}
+
+.closeBtn {
+  padding: 10px;
+  color: white;
+  background-color: var(--lightgray2);
 }

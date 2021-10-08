@@ -10,6 +10,8 @@
   align-items: center;
   justify-content: center;
 
+  background-color: rgba(0, 0, 0, 0.15);
+
   z-index: 999;
 }
 .popupBG.hide {
@@ -27,12 +29,33 @@
 
 .popupForm {
   width: 500px;
-  height: 500px;
-  background-color: aquamarine;
+  min-width: 250px;
+  background-color: white;
+  border-radius: 10px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 70px;
+  padding: 30px;
+
+  --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.footer {
+  display: flex;
+
+  width: 100%;
+
+  margin-top: 1rem;
+}
+
+.addBtn {
+  width: 100%;
+  background-color: var(--green);
+  color: white;
+  margin-right: 0.5rem;
 }

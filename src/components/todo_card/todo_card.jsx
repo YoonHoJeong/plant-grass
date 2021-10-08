@@ -3,6 +3,7 @@ import todoCardCss from "./todo_card.module.css";
 import commonCss from "../../common.module.css";
 import dbManager from "../../services/dbManager";
 import { get28days } from "../../contexts/DateContext";
+import CloseIcon from "@mui/icons-material/Close";
 
 let styles = {};
 
@@ -50,16 +51,12 @@ const TodoCard = ({ todo, showPopup }) => {
 
   return (
     <li className={styles.todoCard}>
-      <button
-        className={`${styles.btn} ${styles.closeBtn}`}
-        onClick={handleClose}
-      >
-        close
+      <button className={`${styles.closeIcon}`} onClick={handleClose}>
+        <CloseIcon />
       </button>
       <section>
-        <header className={styles.indexText}>TODO NAME</header>
         <div className={styles.todoTitle}>
-          <div ref={titleRef} className={styles.lgFont}>
+          <div ref={titleRef} className={styles.cardTitle}>
             {todo.title}
           </div>
           <button className={styles.editBtn} onClick={handleEdit}>
@@ -69,7 +66,6 @@ const TodoCard = ({ todo, showPopup }) => {
       </section>
       <section className={styles.records}>
         <div>
-          <div className={styles.indexText}>RECORDS</div>
           <ul className={styles.grassContainer}>
             {get28days().map((date) => (
               <li
