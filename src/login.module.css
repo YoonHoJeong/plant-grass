@@ -43,3 +43,7 @@
   text-decoration: underline;
   margin-left: 5px;
 }
+
+.form {
+  width: 100%;
+}

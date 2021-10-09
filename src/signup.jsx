@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import signupCss from "./login.module.css";
 import commonCss from "./common.module.css";
-import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import useLoader from "./hooks/useLoader";
-import dbManager from "./services/dbManager";
 
 let styles = {};
 
@@ -14,16 +12,21 @@ Object.assign(styles, signupCss, commonCss);
 const Signup = () => {
   const { signup } = useAuth();
   const history = useHistory();
-  const [email, setEmail] = useState("");
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+    username: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleDuplicate = (e) => {
-    e.preventDefault();
-    dbManager.checkDuplicateEmail(email);
+  const handleFormChange = (e) => {
+    setValues((cur) => ({ ...cur, [e.target.name]: e.target.value }));
+    console.log(values);
   };
-  const handleChange = (e) => {};
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    signup();
   };
   let [loader, showLoader, hideLoader] = useLoader();
 
@@ -47,12 +50,13 @@ const Signup = () => {
           </div>
         </div>
 
-        <form>
+        <form className={styles.form}>
           <input
             className={styles.textInput}
             type="text"
             name="displayName"
             placeholder="Username"
+            onChange={handleFormChange}
           />
           <div
             className={styles.errorMsg}
@@ -64,11 +68,10 @@ const Signup = () => {
               className={styles.textInput}
               type="email"
               name="email"
-              onChange={handleChange}
               placeholder="Email Address"
+              onChange={handleFormChange}
             />
             <div className={styles.errorMsg} name="email" component="div"></div>
-            <button onClick={handleDuplicate}>중복 확인</button>
           </section>
 
           <input
@@ -76,6 +79,7 @@ const Signup = () => {
             type="password"
             name="password"
             placeholder="Password"
+            onChange={handleFormChange}
           />
           <div
             className={styles.errorMsg}

@@ -59,14 +59,18 @@ const Login = (props) => {
           }}
         >
           {({ isSubmitting }) => (
-            <Form>
+            <Form className={styles.form}>
               <Field
                 className={styles.textInput}
                 type="email"
                 name="email"
                 placeholder="Email Address"
               />
-              <ErrorMessage name="email" component="div" />
+              {/* <ErrorMessage
+                className={styles.errorMsg}
+                name="email"
+                component="div"
+              /> */}
 
               <Field
                 className={styles.textInput}
@@ -74,7 +78,11 @@ const Login = (props) => {
                 name="password"
                 placeholder="Password"
               />
-              <ErrorMessage name="password" component="div" />
+              {/* <ErrorMessage
+                className={styles.errorMsg}
+                name="password"
+                component="div"
+              /> */}
               <div className={`${styles.indexText} ${styles.notification}`}>
                 <span>NO ACCOUNT?</span>
                 <Link to="/signup">SIGN UP</Link>

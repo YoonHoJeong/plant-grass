@@ -12,6 +12,9 @@ Daily / Weekly Plan Todo List
 
 # Todos
 
+- [ ] commit log
+- [ ] settings
+- [ ] change card's theme color / grass color
 - [ ] update user profile
 - [ ] update best record
 - [ ] hide api keys
