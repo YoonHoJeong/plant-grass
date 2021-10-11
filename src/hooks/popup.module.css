@@ -66,6 +66,6 @@
 
 .popupForm > .closeIcon {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
+  top: 0.75rem;
+  right: 1rem;
 }

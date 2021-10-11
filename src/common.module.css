@@ -9,6 +9,7 @@
   --pink: #f784ad;
 
   --md-btn-width: 182px;
+  --md-btn-height: 48px;
 
   --lg-font-size: 24px;
   --md-font-size: 16px;
@@ -40,7 +41,7 @@ button {
 }
 
 .btn {
-  height: 48px;
+  height: var(--md-btn-height);
   font-size: 16px;
 
   display: flex;

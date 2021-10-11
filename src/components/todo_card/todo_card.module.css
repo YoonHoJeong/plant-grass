@@ -106,7 +106,10 @@
   position: absolute;
   right: var(--card-padding);
   top: var(--card-padding);
-  color: white;
+  color: var(--lightgray2);
+}
+.todoCard > .closeIcon:hover {
+  color: var(--activeBlue);
 }
 
 li.commit {

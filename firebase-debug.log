@@ -1,0 +1,21 @@
+[debug] [2021-10-11T15:17:01.180Z] ----------------------------------------------------------------------
+[debug] [2021-10-11T15:17:01.182Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dbsgh8941\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2021-10-11T15:17:01.183Z] CLI Version:   9.20.0
+[debug] [2021-10-11T15:17:01.183Z] Platform:      win32
+[debug] [2021-10-11T15:17:01.183Z] Node Version:  v14.17.2
+[debug] [2021-10-11T15:17:01.184Z] Time:          Tue Oct 12 2021 00:17:01 GMT+0900 (대한민국 표준시)
+[debug] [2021-10-11T15:17:01.184Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-10-11T15:17:01.191Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-10-11T15:17:01.191Z] > authorizing via signed-in user (uno8941@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\dbsgh8941\projects\plant-grass
+

@@ -6,7 +6,8 @@
 
 .addActionBtn {
   position: absolute;
-  top: 20px;
+  z-index: 99;
+  top: -60px;
   right: 20px;
 
   width: var(--md-btn-width);

@@ -33,12 +33,9 @@ const Login = (props) => {
       // 세션에 로그인된 유저가 있는 경우, Main으로 이동
       goToMain();
     }
-    hideLoader();
-  }, []);
+  }, [auth.user]);
 
-  return loader ? (
-    loader
-  ) : (
+  return (
     <div className={styles.bg}>
       <div className={styles.container}>
         <div className={`${styles.containerTitle}`}>
