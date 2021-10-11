@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import headerCss from "./main_header.module.css";
 import commonCss from "../../common.module.css";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useAuth } from "../../hooks/useAuth";
 
 let styles = {};
@@ -14,7 +13,6 @@ const MainHeader = ({ todos }) => {
 
     Object.keys(todos || {}).forEach((todoId) => {
       const commits = todos[todoId].commits || {};
-      console.log("todo:", todos[todoId]);
       const commitCount = Object.keys(commits).length;
 
       count += commitCount;

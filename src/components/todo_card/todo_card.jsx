@@ -17,8 +17,6 @@ const getCommitDates = (todo) => {
     dates.add(commits[cId].date);
   });
 
-  console.log(dates.has("2021-10-05"));
-
   return dates;
 };
 
@@ -35,7 +33,7 @@ const TodoCard = ({ todo, showPopup }) => {
   };
   const handleEdit = (e) => {
     const editable = titleRef.current.getAttribute("contenteditable");
-    console.log(editable);
+
     if (editable === "true") {
       // 수정 완료
       e.target.innerText = "edit";

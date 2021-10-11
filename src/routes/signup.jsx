@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import signupCss from "./login.module.css";
-import commonCss from "./common.module.css";
+import commonCss from "../common.module.css";
 import { Link, useHistory } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth";
-import useLoader from "./hooks/useLoader";
+import { useAuth } from "../hooks/useAuth";
 
 let styles = {};
 
@@ -17,38 +16,24 @@ const Signup = () => {
   const passwordRef = useRef();
   const history = useHistory();
 
-  const goToMain = () => {
+  const goToMain = useCallback(() => {
     history.push({
       pathname: "/",
     });
-  };
+  });
 
   useEffect(() => {
     if (auth.user) {
       // 세션에 로그인된 유저가 있는 경우, Main으로 이동
       goToMain();
     }
-  }, []);
-
-  const getRef = (key) => {
-    switch (key) {
-      case "username":
-        return usernameRef;
-      case "email":
-        return emailRef;
-      case "password":
-        return passwordRef;
-      default:
-        return null;
-    }
-  };
+  }, [auth.user, goToMain]);
 
   const [values, setValues] = useState({
     email: "",
     password: "",
     username: "",
   });
-  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleFormChange = (e) => {
     setValues((cur) => ({ ...cur, [e.target.name]: e.target.value }));
@@ -72,19 +57,8 @@ const Signup = () => {
     setIsSubmitting(false);
     goToMain();
   };
-  let [loader, showLoader, hideLoader] = useLoader();
 
-  useEffect(() => {
-    hideLoader();
-
-    return () => {
-      showLoader();
-    };
-  }, [hideLoader, showLoader]);
-
-  return loader ? (
-    loader
-  ) : (
+  return (
     <div className={styles.bg}>
       <div className={styles.container}>
         <div className={`${styles.containerTitle}`}>

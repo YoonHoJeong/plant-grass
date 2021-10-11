@@ -1,11 +1,9 @@
-import { getDatabase, set, ref, query, orderByChild } from "@firebase/database";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
 } from "firebase/auth";
 import firebaseApp from "../services/firebase";
 
@@ -37,8 +35,6 @@ function useProvideAuth() {
       const userDBInfo = await dbManager.getUserInfo(uid);
       user = { ...user, ...userDBInfo };
 
-      console.log(user);
-
       setUser(user);
 
       return user;
@@ -50,7 +46,6 @@ function useProvideAuth() {
   };
 
   const signin = async (email, password) => {
-    console.log("signin");
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -62,8 +57,6 @@ function useProvideAuth() {
 
       return userCredential;
     } catch (e) {
-      console.log(e);
-
       handleUser(false);
 
       return false;
@@ -91,13 +84,10 @@ function useProvideAuth() {
 
       switch (errorCode) {
         case "auth/email-already-in-use":
-          console.log(errorCode);
           break;
         case "auth/weak-password":
-          console.log(errorCode);
           break;
         default:
-          console.log("unhandled error:", errorCode);
           break;
       }
 
@@ -113,7 +103,6 @@ function useProvideAuth() {
       })
       .catch((error) => {
         // An error happened.
-        console.log(error);
         handleUser(false);
       });
   };

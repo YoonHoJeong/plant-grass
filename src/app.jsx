@@ -1,20 +1,35 @@
-import AddTodoForm from "./components/add_todo_form";
-import TodoList from "./components/todo_list";
+import React from "react";
+import { useAuth } from "./hooks/useAuth";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import DateContextProvider from "./contexts/DateContext";
-import TodoContextProvider from "./contexts/TodoContext";
+import Login from "./routes/login";
+import Main from "./routes/main";
 
-function App() {
-  return (
-    <div>
-      <TodoContextProvider>
-        <DateContextProvider>
-          <AddTodoForm />
-          <TodoList />
-        </DateContextProvider>
-      </TodoContextProvider>
-    </div>
-  );
-}
+import Signup from "./routes/signup";
+import PrivateRoute from "./PrivateRoute";
 
-export default App;
+const AppTest = () => {
+  const { isAuthenticating } = useAuth();
+
+  if (isAuthenticating) {
+    return <div>Loading</div>;
+  } else {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <PrivateRoute path="/">
+            <Main />
+          </PrivateRoute>
+        </Switch>
+      </Router>
+    );
+  }
+};
+
+export default AppTest;

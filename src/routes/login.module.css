@@ -1,4 +1,4 @@
-@import "./common.module.css";
+@import "../common.module.css";
 
 .container {
   width: 960px;

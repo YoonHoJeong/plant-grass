@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect } from "react";
 import loginCss from "./login.module.css";
-import commonCss from "./common.module.css";
+import commonCss from "../common.module.css";
 import { Link, useHistory } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import useLoader from "./hooks/useLoader";
+import { useAuth } from "../hooks/useAuth";
+import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 let styles = {};
@@ -23,17 +22,14 @@ const Login = (props) => {
     history.push({
       pathname: "/",
     });
-  }, []);
-
-  let [loader, showLoader, hideLoader] = useLoader();
+  }, [history]);
 
   useEffect(() => {
-    console.log("login", "mount", auth.user);
     if (auth.user) {
       // 세션에 로그인된 유저가 있는 경우, Main으로 이동
       goToMain();
     }
-  }, [auth.user]);
+  }, [auth.user, goToMain]);
 
   return (
     <div className={styles.bg}>

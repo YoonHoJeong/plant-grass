@@ -6,9 +6,6 @@ import {
   child,
   update,
   onValue,
-  equalTo,
-  orderByChild,
-  query,
   get,
   set,
 } from "firebase/database";
@@ -153,12 +150,9 @@ export class DBManager {
   }
 
   writeNewUser = async (uid, userData) => {
-    console.log("dbManager", "writeNewUser");
     try {
       await set(ref(this.db, "users/" + uid), { uid, ...userData });
-      console.log("createUser success");
     } catch (e) {
-      console.log("createUser failed");
       console.log(e);
     }
   };

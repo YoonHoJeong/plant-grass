@@ -1,0 +1,36 @@
+/* app */
+.appContainer {
+  display: flex;
+  background-color: var(--lightgray3);
+
+  width: 100vw;
+  height: 100%;
+}
+
+.appMain {
+  flex: 1;
+}
+
+/* main page */
+
+.pageContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.count {
+  font-size: 16px;
+  color: #495057;
+}
+
+/* dashboard */
+
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  background-color: var(--pink);
+  width: 34px;
+  height: 34px;
+}
