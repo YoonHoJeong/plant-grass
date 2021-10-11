@@ -6,7 +6,11 @@ import {
   child,
   update,
   onValue,
+  equalTo,
   orderByChild,
+  query,
+  get,
+  set,
 } from "firebase/database";
 import firebaseApp from "./firebase";
 import { getToday } from "../contexts/DateContext";
@@ -139,11 +143,25 @@ export class DBManager {
       return update(ref(this.db), updates);
     }
   }
-  checkDuplicateEmail(email) {
-    // email 중복 확인
-    const usersRef = this.db.ref("users");
-    console.log(usersRef);
+
+  async getUserInfo(uid) {
+    const userRef = ref(this.db, `users/${uid}`);
+    const snapshot = await get(userRef);
+    const userDBInfo = snapshot.val();
+
+    return userDBInfo;
   }
+
+  writeNewUser = async (uid, userData) => {
+    console.log("dbManager", "writeNewUser");
+    try {
+      await set(ref(this.db, "users/" + uid), { uid, ...userData });
+      console.log("createUser success");
+    } catch (e) {
+      console.log("createUser failed");
+      console.log(e);
+    }
+  };
 
   getTodos() {
     console.log(TAG, "getTodos");

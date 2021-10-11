@@ -1,4 +1,4 @@
-import { getDatabase, set, ref } from "@firebase/database";
+import { getDatabase, set, ref, query, orderByChild } from "@firebase/database";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -10,6 +10,7 @@ import {
 import firebaseApp from "../services/firebase";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import dbManager from "../services/dbManager";
 
 export const authContext = createContext();
 
@@ -17,17 +18,6 @@ export function ProvideAuth({ children }) {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
-
-const createUser = async (uid, userData) => {
-  const db = getDatabase();
-  try {
-    await set(ref(db, "users/" + uid), { uid, ...userData });
-    console.log("createUser success");
-  } catch (e) {
-    console.log("createUser failed");
-    console.log(e);
-  }
-};
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
@@ -37,11 +27,18 @@ function useProvideAuth() {
   // ... to save the user to state.
   const auth = getAuth(firebaseApp);
 
-  const handleUser = (rawUser) => {
+  // firebase auth에 등록된 user 정보를 불러와서 user state에 넣는 과정
+  const handleUser = async (rawUser) => {
+    // rawUser must be auth.user
     if (rawUser) {
-      const user = formatUser(rawUser);
+      // const user = formatUser(rawUser);
+      const uid = rawUser.uid;
+      let user = { uid: rawUser.uid, email: rawUser.email };
+      const userDBInfo = await dbManager.getUserInfo(uid);
+      user = { ...user, ...userDBInfo };
 
-      createUser(user.uid, user);
+      console.log(user);
+
       setUser(user);
 
       return user;
@@ -53,6 +50,7 @@ function useProvideAuth() {
   };
 
   const signin = async (email, password) => {
+    console.log("signin");
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -66,12 +64,12 @@ function useProvideAuth() {
     } catch (e) {
       console.log(e);
 
-      handleUser(null);
+      handleUser(false);
 
-      return null;
+      return false;
     }
   };
-  const signup = async (email, password, username) => {
+  const signup = async ({ email, password, username }) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -80,18 +78,29 @@ function useProvideAuth() {
       );
       const user = userCredential.user;
 
-      await updateProfile(auth.currentUser, {
-        displayName: username,
+      await dbManager.writeNewUser(user.uid, {
+        uid: user.uid,
+        email,
+        username,
       });
-
-      // TODO: delete user id when write user data into db fails
       handleUser(user);
 
       return user;
     } catch (e) {
       const errorCode = e.code;
-      const errorMessage = e.message;
-      console.log(errorCode, errorMessage);
+
+      switch (errorCode) {
+        case "auth/email-already-in-use":
+          console.log(errorCode);
+          break;
+        case "auth/weak-password":
+          console.log(errorCode);
+          break;
+        default:
+          console.log("unhandled error:", errorCode);
+          break;
+      }
+
       return null;
     }
   };
@@ -105,6 +114,7 @@ function useProvideAuth() {
       .catch((error) => {
         // An error happened.
         console.log(error);
+        handleUser(false);
       });
   };
 
@@ -136,7 +146,7 @@ const formatUser = (user) => {
   return {
     uid: user.uid,
     email: user.email,
-    name: user.displayName,
+    username: user.username,
     // provider: user.providerData[0].providerId,
     // photoUrl: user.photoURL,
   };
