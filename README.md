@@ -2,6 +2,10 @@
 
 Daily / Weekly Plan Todo List
 
+# Deploy
+
+- [plant-grass](https://loving-jackson-86cca7.netlify.app/login)
+
 # Functions
 
 - [x] add / delete todos
@@ -12,9 +16,12 @@ Daily / Weekly Plan Todo List
 
 # Todos
 
+- [ ] user db update
+- [ ] user auth
+  - [ ] update user profile
+  - [ ] sign up - check email duplication
 - [ ] commit log
 - [ ] settings
 - [ ] change card's theme color / grass color
-- [ ] update user profile
 - [ ] update best record
 - [ ] hide api keys
