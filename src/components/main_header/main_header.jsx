@@ -2,6 +2,8 @@ import React, { useCallback } from "react";
 import headerCss from "./main_header.module.css";
 import commonCss from "../../common.module.css";
 import { useAuth } from "../../hooks/useAuth";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 let styles = {};
 Object.assign(styles, headerCss, commonCss);
@@ -20,6 +22,9 @@ const MainHeader = ({ todos }) => {
 
     return count;
   }, []);
+  const handleEditProfile = (e) => {
+    console.log("editprofile clicked");
+  };
 
   return (
     <header className={styles.header}>
@@ -48,12 +53,15 @@ const MainHeader = ({ todos }) => {
           </div>
         </div>
         <div className={styles.profileMore}>
-          <button
-            className={`${styles.btn} ${styles.editProfileBtn}`}
-            onClick={signout}
-          >
+          <Link to={`/settings`}>
+            <Button variant="outlined" onClick={handleEditProfile}>
+              Edit Profile
+            </Button>
+          </Link>
+
+          <Button variant="outlined" onClick={signout}>
             logout
-          </button>
+          </Button>
         </div>
       </section>
       <ul className={styles.tabNavigator}>
