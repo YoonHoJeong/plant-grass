@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  useRouteMatch,
-} from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 
-import appCss from "../app.module.css";
+import mainCss from "./main.module.css";
 import commonCss from "../common.module.css";
 import { useAuth } from "../hooks/useAuth";
 import MainHeader from "../components/main_header";
@@ -20,7 +13,7 @@ import SideBar from "../components/sideBar/sideBar";
 import Settings from "./settings";
 
 let styles = {};
-Object.assign(styles, appCss, commonCss);
+Object.assign(styles, mainCss, commonCss);
 
 const Main = () => {
   const auth = useAuth();
@@ -40,7 +33,7 @@ const Main = () => {
   }, [auth.user]);
 
   return (
-    <>
+    <div className={styles.main}>
       {popup}
       <SideBar />
 
@@ -55,11 +48,11 @@ const Main = () => {
             </main>
           </div>
         </Route>
-        <Route path={`${path}/settings`}>
+        <Route path={`${path}settings`}>
           <Settings />
         </Route>
       </Switch>
-    </>
+    </div>
   );
 };
 

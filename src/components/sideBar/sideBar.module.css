@@ -1,4 +1,5 @@
 .sideBar {
+  height: 100%;
   background-color: white;
   border-right: 1px solid var(--lightgray2);
 
