@@ -20,7 +20,7 @@ const Signup = () => {
     history.push({
       pathname: "/",
     });
-  });
+  }, []);
 
   useEffect(() => {
     if (auth.user) {

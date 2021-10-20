@@ -22,9 +22,6 @@ const MainHeader = ({ todos }) => {
 
     return count;
   }, []);
-  const handleEditProfile = (e) => {
-    console.log("editprofile clicked");
-  };
 
   return (
     <header className={styles.header}>
@@ -54,9 +51,7 @@ const MainHeader = ({ todos }) => {
         </div>
         <div className={styles.profileMore}>
           <Link to={`/settings`}>
-            <Button variant="outlined" onClick={handleEditProfile}>
-              Edit Profile
-            </Button>
+            <Button variant="outlined">Edit Profile</Button>
           </Link>
 
           <Button variant="outlined" onClick={signout}>

@@ -6,3 +6,8 @@
 
   background-color: white;
 }
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+}

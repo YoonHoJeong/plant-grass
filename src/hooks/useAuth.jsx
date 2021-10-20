@@ -9,6 +9,7 @@ import firebaseApp from "../services/firebase";
 
 import { createContext, useContext, useEffect, useState } from "react";
 import dbManager from "../services/dbManager";
+import { getDatabase, onValue, ref } from "@firebase/database";
 
 export const authContext = createContext();
 
@@ -121,6 +122,19 @@ function useProvideAuth() {
     return () => unsubscribe();
   }, [auth]);
 
+  useEffect(() => {
+    if (user !== null) {
+      const db = getDatabase(firebaseApp);
+      const userRef = ref(db, `users/${user.uid}`);
+
+      const unsubscribe = onValue(userRef, (snapshot) => {
+        setUser((user) => ({ ...user, ...snapshot.val() }));
+      });
+
+      return () => unsubscribe();
+    }
+  }, [user]);
+
   // Return the user object and auth methods
   return {
     user,
@@ -130,16 +144,6 @@ function useProvideAuth() {
     signout,
   };
 }
-
-const formatUser = (user) => {
-  return {
-    uid: user.uid,
-    email: user.email,
-    username: user.username,
-    // provider: user.providerData[0].providerId,
-    // photoUrl: user.photoURL,
-  };
-};
 
 export function useAuth() {
   return useContext(authContext);

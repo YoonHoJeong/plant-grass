@@ -162,6 +162,19 @@ export class DBManager {
     // 로그인 되어있을 경우 exception handling
     return this.user ? this.todos : {};
   }
+
+  async updateUserProfile(uid, profileData) {
+    console.log("updateuserprofile");
+    const updates = {};
+    const snapShot = await get(child(ref(this.db), `users/${uid}`));
+    const curData = snapShot.toJSON();
+    console.log(curData);
+    console.log(profileData);
+
+    updates["/users/" + uid] = { ...curData, ...profileData };
+
+    return update(ref(this.db), updates);
+  }
 }
 const dbManager = new DBManager(firebaseApp);
 
