@@ -123,7 +123,7 @@ export class DBManager {
     }
   };
 
-  updateTodoTitle(todoId, title) {
+  updateTodo(todoId, todoData) {
     if (!this.user) {
       // login 되지 않았을 때,
       console.log(TAG, "writeNewTodo: user is not logged in.");
@@ -133,8 +133,12 @@ export class DBManager {
 
       // Write the new post's data simultaneously in the posts list and the user's post list.
       const updates = {};
-      updates["/todos/" + todoId + "/title/"] = title;
-      updates["/user-todos/" + uid + "/" + todoId + "/title/"] = title;
+      Object.keys(todoData).forEach((key) => {
+        const value = todoData[key];
+
+        updates["/todos/" + todoId + "/" + key] = value;
+        updates["/user-todos/" + uid + "/" + todoId + "/" + key] = value;
+      });
 
       return update(ref(this.db), updates);
     }

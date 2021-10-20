@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import todoCardCss from "./todo_card.module.css";
 import commonCss from "../../common.module.css";
 import dbManager from "../../services/dbManager";
@@ -12,7 +12,14 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Avatar, CardHeader, IconButton, Tooltip } from "@mui/material";
+import {
+  Avatar,
+  CardHeader,
+  Collapse,
+  Grid,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import { red } from "@mui/material/colors";
 
 let styles = {};
@@ -32,7 +39,10 @@ const getCommitDates = (todo) => {
 
 const TodoCard = ({ todo, showPopup }) => {
   const titleRef = useRef();
-
+  const colorInputRef = useRef();
+  const handleColorClick = () => {
+    colorInputRef.current.click();
+  };
   const handleCommit = (e) => {
     showPopup("commit", todo);
   };
@@ -48,7 +58,7 @@ const TodoCard = ({ todo, showPopup }) => {
       // 수정 완료
       e.target.innerText = "edit";
       titleRef.current.setAttribute("contenteditable", false);
-      dbManager.updateTodoTitle(todo.id, titleRef.current.innerText);
+      dbManager.updateTodo(todo.id, titleRef.current.innerText);
     } else {
       // 수정 요청
       e.target.innerText = "done";
@@ -56,16 +66,28 @@ const TodoCard = ({ todo, showPopup }) => {
     }
   };
   const commitDates = getCommitDates(todo);
-  const cardColor = red[500];
 
   return (
     <Card sx={{ maxWidth: 345 }} className={styles.card}>
       <CardHeader
         avatar={
-          <div
-            className={styles.cardColorIcon}
-            style={{ backgroundColor: cardColor }}
-          ></div>
+          <IconButton aria-label="colorIcon" onClick={handleColorClick}>
+            <div
+              className={styles.cardColorIcon}
+              style={{ backgroundColor: todo.color ? todo.color : "#000000" }}
+            >
+              <input
+                style={{ visibility: "hidden" }}
+                ref={colorInputRef}
+                type="color"
+                id="colorpicker"
+                onChange={(e) => {
+                  dbManager.updateTodo(todo.id, { color: e.target.value });
+                }}
+                value={todo.color ? todo.color : "#000000"}
+              />
+            </div>
+          </IconButton>
         }
         action={
           <IconButton aria-label="settings">
@@ -75,6 +97,7 @@ const TodoCard = ({ todo, showPopup }) => {
         title={todo.title}
         subheader="2021/10/20"
       />
+
       <CardContent>
         <ul className={styles.grassContainer}>
           {get28days().map((date) => {
@@ -82,7 +105,9 @@ const TodoCard = ({ todo, showPopup }) => {
               <Tooltip title={date}>
                 <li
                   key={date}
-                  style={{ backgroundColor: cardColor }}
+                  style={{
+                    backgroundColor: todo.color ? todo.color : "#000000",
+                  }}
                   date={date}
                 ></li>
               </Tooltip>
