@@ -12,7 +12,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Avatar, CardHeader, IconButton } from "@mui/material";
+import { Avatar, CardHeader, IconButton, Tooltip } from "@mui/material";
 import { red } from "@mui/material/colors";
 
 let styles = {};
@@ -77,15 +77,19 @@ const TodoCard = ({ todo, showPopup }) => {
       />
       <CardContent>
         <ul className={styles.grassContainer}>
-          {get28days().map((date) => (
-            <li
-              key={date}
-              style={
-                commitDates.has(date) ? { backgroundColor: cardColor } : null
-              }
-              date={date}
-            ></li>
-          ))}
+          {get28days().map((date) => {
+            return commitDates.has(date) ? (
+              <Tooltip title={date}>
+                <li
+                  key={date}
+                  style={{ backgroundColor: cardColor }}
+                  date={date}
+                ></li>
+              </Tooltip>
+            ) : (
+              <li key={date} date={date}></li>
+            );
+          })}
         </ul>
       </CardContent>
       <CardActions>
