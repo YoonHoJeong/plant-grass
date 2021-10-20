@@ -16,7 +16,6 @@ const TAG = "DBManger";
 
 export class DBManager {
   constructor(firebaseApp) {
-    console.log("dbManager mount");
     this.app = firebaseApp;
     this.db = getDatabase(firebaseApp);
     this.auth = getAuth(firebaseApp);
