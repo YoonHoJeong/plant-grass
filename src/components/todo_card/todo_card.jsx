@@ -90,8 +90,8 @@ const TodoCard = ({ todo, showPopup }) => {
           </IconButton>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
+          <IconButton aria-label="closeBtn">
+            <CloseIcon onClick={handleClose} />
           </IconButton>
         }
         title={todo.title}

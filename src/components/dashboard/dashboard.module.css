@@ -5,14 +5,12 @@
 }
 
 .addActionBtn {
-  position: absolute;
+  position: absolute !important;
   z-index: 99;
   top: -60px;
   right: 20px;
 
-  width: var(--md-btn-width);
   background-color: var(--green);
-
   color: white;
 }
 

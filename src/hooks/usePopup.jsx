@@ -3,6 +3,8 @@ import commonStyles from "../common.module.css";
 import popupStyles from "./popup.module.css";
 import dbManager from "../services/dbManager";
 import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 
 let styles = {};
 Object.assign(styles, commonStyles, popupStyles);
@@ -56,9 +58,9 @@ const usePopup = () => {
     show ? (
       <div className={`${styles.popupBG} ${!show && styles.hide}`}>
         <form className={styles.popupForm} onSubmit={handleSubmit}>
-          <button className={styles.closeIcon} onClick={handleClose}>
+          <IconButton className={styles.closeIcon} onClick={handleClose}>
             <CloseIcon />
-          </button>
+          </IconButton>
           <header className={styles.popupHeader}>{todo?.title}</header>
           <input
             className={styles.textInput}
@@ -93,18 +95,21 @@ const usePopup = () => {
             />
           )}
           <section className={styles.footer}>
-            <button
-              className={`${styles.btn} ${styles.addBtn}`}
+            <Button
+              variant="contained"
+              color="success"
+              className={`${styles.addBtn}`}
               onClick={handleSubmit}
             >
               {`Add ${type}`}
-            </button>
-            <button
-              className={`${styles.btn} ${styles.closeBtn}`}
+            </Button>
+            <Button
+              color="success"
+              className={`${styles.closeBtn}`}
               onClick={handleClose}
             >
               close
-            </button>
+            </Button>
           </section>
         </form>
       </div>

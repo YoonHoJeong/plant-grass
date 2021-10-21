@@ -60,9 +60,12 @@ const MainHeader = ({ todos }) => {
         </div>
       </section>
       <ul className={styles.tabNavigator}>
-        <li className={`${styles.tablink} ${styles.active}`}>Dashboard</li>
-        <li className={styles.tablink}>Todo</li>
-        <li className={styles.tablink}>Settings</li>
+        <li className={`${styles.tablink} ${styles.active}`}>
+          <Link to={`/`}>Dashboard</Link>
+        </li>
+        <li className={styles.tablink}>
+          <Link to={`/todo`}>Todo</Link>
+        </li>
       </ul>
     </header>
   );

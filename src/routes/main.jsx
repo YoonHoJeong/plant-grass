@@ -11,6 +11,7 @@ import usePopup from "../hooks/usePopup";
 import dbManager from "../services/dbManager";
 import SideBar from "../components/sideBar/sideBar";
 import Settings from "./settings";
+import TodoDetail from "../components/todo_detail";
 
 let styles = {};
 Object.assign(styles, mainCss, commonCss);
@@ -43,6 +44,7 @@ const Main = () => {
             <main className={styles.appMain}>
               <div className={styles.pageContainer}>
                 <MainHeader todos={todos} />
+
                 <Dashboard todos={todos} showPopup={showActionPopup} />
               </div>
             </main>
@@ -50,6 +52,9 @@ const Main = () => {
         </Route>
         <Route path={`${path}settings`}>
           <Settings />
+        </Route>
+        <Route path={`${path}todo/:tid`}>
+          <TodoDetail />
         </Route>
       </Switch>
     </div>

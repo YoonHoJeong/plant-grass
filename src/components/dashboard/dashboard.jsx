@@ -2,6 +2,7 @@ import React from "react";
 import dashboardCss from "./dashboard.module.css";
 import commonCss from "../../common.module.css";
 import TodoCard from "../todo_card";
+import Button from "@mui/material/Button";
 
 let styles = {};
 
@@ -14,12 +15,13 @@ const Dashboard = ({ todos, showPopup }) => {
 
   return (
     <div className={styles.dashboard}>
-      <button
-        className={`${styles.btn} ${styles.addActionBtn}`}
+      <Button
+        variant="contained"
+        className={`${styles.addActionBtn}`}
         onClick={handleClickAction}
       >
         Add Action
-      </button>
+      </Button>
       <ul className={styles.todoCards}>
         {Object.keys(todos || {}).map((key) => {
           return (
