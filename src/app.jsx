@@ -7,6 +7,7 @@ import Signup from "./routes/signup";
 import PrivateRoute from "./PrivateRoute";
 
 import styles from "./app.module.css";
+import SideBar from "./components/sideBar/sideBar";
 
 const App = () => {
   const { isAuthenticating } = useAuth();
@@ -17,6 +18,8 @@ const App = () => {
     return (
       <div className={styles.app}>
         <Router>
+          <SideBar />
+
           <Switch>
             <Route path="/signup">
               <Signup />

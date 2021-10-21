@@ -4,6 +4,7 @@ import commonCss from "../../common.module.css";
 import { useAuth } from "../../hooks/useAuth";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import Typography from "@mui/material/Typography";
 
 let styles = {};
 Object.assign(styles, headerCss, commonCss);
@@ -61,10 +62,18 @@ const MainHeader = ({ todos }) => {
       </section>
       <ul className={styles.tabNavigator}>
         <li className={`${styles.tablink} ${styles.active}`}>
-          <Link to={`/`}>Dashboard</Link>
+          <Link to={`/`}>
+            <Typography variant="subtitle2" gutterBottom component="div">
+              DASHBOARD
+            </Typography>
+          </Link>
         </li>
         <li className={styles.tablink}>
-          <Link to={`/todo`}>Todo</Link>
+          <Link to={`/todo`}>
+            <Typography variant="subtitle2" gutterBottom component="div">
+              TODO
+            </Typography>
+          </Link>
         </li>
       </ul>
     </header>

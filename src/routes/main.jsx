@@ -9,7 +9,6 @@ import MainHeader from "../components/main_header";
 import Dashboard from "../components/dashboard";
 import usePopup from "../hooks/usePopup";
 import dbManager from "../services/dbManager";
-import SideBar from "../components/sideBar/sideBar";
 import Settings from "./settings";
 import TodoDetail from "../components/todo_detail";
 
@@ -36,19 +35,11 @@ const Main = () => {
   return (
     <div className={styles.main}>
       {popup}
-      <SideBar />
 
+      <MainHeader todos={todos} />
       <Switch>
         <Route exact path={path}>
-          <div className={styles.appContainer}>
-            <main className={styles.appMain}>
-              <div className={styles.pageContainer}>
-                <MainHeader todos={todos} />
-
-                <Dashboard todos={todos} showPopup={showActionPopup} />
-              </div>
-            </main>
-          </div>
+          <Dashboard todos={todos} showPopup={showActionPopup} />
         </Route>
         <Route path={`${path}settings`}>
           <Settings />
