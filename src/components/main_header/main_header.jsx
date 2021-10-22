@@ -3,7 +3,7 @@ import headerCss from "./main_header.module.css";
 import commonCss from "../../common.module.css";
 import { useAuth } from "../../hooks/useAuth";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 
 let styles = {};
@@ -11,6 +11,7 @@ Object.assign(styles, headerCss, commonCss);
 
 const MainHeader = ({ todos }) => {
   const { user, signout } = useAuth();
+  const { pathname } = useLocation();
   const countCommits = useCallback((todos) => {
     let count = 0;
 
@@ -61,17 +62,36 @@ const MainHeader = ({ todos }) => {
         </div>
       </section>
       <ul className={styles.tabNavigator}>
-        <li className={`${styles.tablink} ${styles.active}`}>
+        <li
+          className={`${styles.tablink} ${
+            pathname === "/" ? styles.active : null
+          }`}
+        >
           <Link to={`/`}>
             <Typography variant="subtitle2" gutterBottom component="div">
               DASHBOARD
             </Typography>
           </Link>
         </li>
-        <li className={styles.tablink}>
+        <li
+          className={`${styles.tablink} ${
+            pathname === "/todo" ? styles.active : null
+          }`}
+        >
           <Link to={`/todo`}>
             <Typography variant="subtitle2" gutterBottom component="div">
               TODO
+            </Typography>
+          </Link>
+        </li>
+        <li
+          className={`${styles.tablink} ${
+            pathname.indexOf("timelog") >= 0 ? styles.active : null
+          }`}
+        >
+          <Link to={`/timelog`}>
+            <Typography variant="subtitle2" gutterBottom component="div">
+              TIMELOG
             </Typography>
           </Link>
         </li>

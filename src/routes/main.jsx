@@ -11,6 +11,7 @@ import usePopup from "../hooks/usePopup";
 import dbManager from "../services/dbManager";
 import Settings from "./settings";
 import TodoDetail from "../components/todo_detail";
+import Timelog from "../components/timelog/timelog";
 
 let styles = {};
 Object.assign(styles, mainCss, commonCss);
@@ -46,6 +47,9 @@ const Main = () => {
         </Route>
         <Route path={`${path}todo/:tid`}>
           <TodoDetail />
+        </Route>
+        <Route path={`${path}timelog`}>
+          <Timelog />
         </Route>
       </Switch>
     </div>
